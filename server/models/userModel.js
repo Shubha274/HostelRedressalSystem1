@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userModel = new mongoose.Schema({
   name: { type: String, required: true }, // Full name
   email: { type: String, unique: true, required: true }, // Email address
-  password: { type: String, unique: true, required: true }, // University ID as password
+  userId: { type: String, unique: true, required: true }, // University ID as password
   role: { type: String, enum: ["student", "warden", "admin"], required: true }, // Role
   hostel: { type: mongoose.Schema.Types.ObjectId, ref: "Hostel" }, // Associated hostel
   contact: { type: String }, // Contact info
@@ -11,5 +11,5 @@ const userModel = new mongoose.Schema({
   year: { type: Number }, // Year of study (students only)
   createdAt: { type: Date, default: Date.now }, // User creation timestamp
 });
-const User = mongoose.model("User", userModel);
-module.exports = User;
+const Users = mongoose.model("Users", userModel, "Users");
+module.exports = Users;

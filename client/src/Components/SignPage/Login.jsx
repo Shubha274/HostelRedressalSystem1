@@ -84,12 +84,13 @@
 // export default Login;
 import React, { useState } from "react";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 
-const Login = () => {
+const Login = ({ setRole, setUserId }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -109,12 +110,23 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
-        username,
-        password,
+      // Send both userId (username) and password to the backend
+      const response = await axios.post("http://localhost:8080/api/", {
+        userId: username, // username is used as userId in the DB
+        password, // send the password as well
       });
-      const { role } = response.data;
 
+      const { token, role } = response.data;
+
+      // Store token in localStorage
+      localStorage.setItem("jwtToken", token);
+
+      // Decode token to get userId and role
+      const decoded = jwt_decode(token);
+      setUserId(decoded.id);
+      setRole(role);
+
+      // Redirect user based on their role
       if (role === "student") {
         navigate("/student-dashboard");
       } else if (role === "warden") {
@@ -125,8 +137,8 @@ const Login = () => {
         setError("Unknown role.");
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setError("Invalid username or password.");
+      console.error("Login error:", error.response?.data || error.message);
+      setError("Invalid userId or password.");
     } finally {
       setIsLoading(false);
     }

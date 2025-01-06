@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./forms.css";
 import axios from "axios";
 
-const Forms = () => {
+const Forms = ({ role }) => {
   const [formData, setFormData] = useState({
     name: "",
     roomNo: "",
@@ -114,17 +114,19 @@ const Forms = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="roomNo">Room No:</label>
-          <input
-            type="text"
-            id="roomNo"
-            name="roomNo"
-            value={formData.roomNo}
-            onChange={handleChange}
-            onFocus={() => setFocusedField("roomNo")}
-          />
-        </div>
+        {role === "student" && (
+          <div className="form-group">
+            <label htmlFor="roomNo">Room No:</label>
+            <input
+              type="text"
+              id="roomNo"
+              name="roomNo"
+              value={formData.roomNo}
+              onChange={handleChange}
+              onFocus={() => setFocusedField("roomNo")}
+            />
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="issueDescription">Description of Issue:</label>

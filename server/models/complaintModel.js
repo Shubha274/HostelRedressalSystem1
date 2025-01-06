@@ -19,5 +19,5 @@ const complaintModel = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }, // Creation timestamp
   updatedAt: { type: Date, default: Date.now }, // Last update timestamp
 });
-const Complaint = mongoose.model("Complaint", complaintModel);
+const Complaint = mongoose.model("Complaint", complaintModel, "Complaint");
 module.exports = Complaint;
