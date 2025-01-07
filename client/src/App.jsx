@@ -1,97 +1,61 @@
-import { useState } from "react";
 import {
   BrowserRouter as Router,
-  Route,
   Routes,
+  Route,
   Navigate,
 } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashboard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
-import Forms from "./Components/IssueForm/Forms";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null);
+  const token = localStorage.getItem("token");
+  let role = null;
 
-  // Logout function
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setRole(null);
-  };
-
-  // Private Route to protect pages
-  const PrivateRoute = ({ children, allowedRoles }) => {
-    if (!isAuthenticated) {
-      return <Navigate to="/login" />;
+  // Decode the token to get the role if the token exists
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      role = decodedToken.role; // Extract the role from the decoded token
+    } catch (error) {
+      console.error("Invalid token", error);
     }
-    if (!allowedRoles.includes(role)) {
-      return <Navigate to="/login" />;
-    }
-    return children;
-  };
+  }
 
   return (
     <Router>
       <Routes>
-        {/* Default Route */}
         <Route
           path="/"
           element={
-            isAuthenticated ? (
+            token ? (
               <Navigate to={`/${role}-dashboard`} />
             ) : (
               <Navigate to="/login" />
             )
           }
         />
-
-        {/* Public Route */}
-        <Route
-          path="/login"
-          element={
-            <SignIn setIsAuthenticated={setIsAuthenticated} setRole={setRole} />
-          }
-        />
-
-        {/* Private Routes */}
+        <Route path="/login" element={<SignIn />} />
         <Route
           path="/student-dashboard"
           element={
-            <PrivateRoute allowedRoles={["student"]}>
-              <StudentDboard onLogout={handleLogout} />
-            </PrivateRoute>
+            role === "student" ? <StudentDboard /> : <Navigate to="/login" />
           }
         />
         <Route
           path="/warden-dashboard"
           element={
-            <PrivateRoute allowedRoles={["warden"]}>
-              <WardenDboard onLogout={handleLogout} />
-            </PrivateRoute>
+            role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
           }
         />
         <Route
           path="/admin-dashboard"
           element={
-            <PrivateRoute allowedRoles={["admin"]}>
-              <AdminDboard onLogout={handleLogout} />
-            </PrivateRoute>
+            role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
           }
         />
-
-        {/* Issue Form for Both Students and Wardens */}
-        <Route
-          path="/issue-form"
-          element={
-            <PrivateRoute allowedRoles={["student", "warden"]}>
-              <Forms />
-            </PrivateRoute>
-          }
-        />
-
-        {/* 404 Route */}
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </Router>

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
+
 //for accepting post form data
 const bodyParser = require("express").json;
 const morgan = require("morgan");
@@ -15,7 +16,7 @@ connectDB();
 // Use CORS middleware
 const corsOptions = {
   origin: "http://localhost:5173", // Frontend origin
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // If you need to send cookies or headers
 };

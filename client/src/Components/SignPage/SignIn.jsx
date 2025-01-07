@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
 const SignIn = () => {
   const [userId, setUserId] = useState("");
@@ -19,44 +20,49 @@ const SignIn = () => {
 
     const trimmedUserId = userId.trim();
     const trimmedPassword = password.trim();
-    console.log(trimmedUserId);
-    console.log(trimmedPassword);
+
     if (!trimmedUserId || !trimmedPassword) {
       setError("Please enter both your userId and password.");
       return;
     }
 
-    if (trimmedUserId !== trimmedPassword) {
-      setError("UserId and password must be the same.");
-      return;
-    }
-
     setIsLoading(true);
-
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/login",
-        { userId: trimmedUserId, password: trimmedPassword },
-        { headers: { "Content-Type": "application/json" } }
-      );
+      const response = await axios.post("http://localhost:8080/api/login", {
+        userId: trimmedUserId,
+        password: trimmedPassword,
+      });
 
-      const { role, userData } = response.data;
-      console.log(role);
-      localStorage.setItem("user", JSON.stringify(userData));
+      const { token } = response.data;
 
-      if (role === "student") {
-        navigate("/student-dashboard");
-      } else if (role === "admin") {
-        navigate("/admin-dashboard");
-      } else if (role === "warden") {
-        navigate("/warden-dashboard");
-      } else {
-        setError("Unknown role.");
+      // Store the token in localStorage
+      localStorage.setItem("token", token);
+
+      // Decode the token to get the user role
+      const decodedToken = jwtDecode(token);
+      const { role } = decodedToken; // Get role from decoded token
+
+      // Redirect based on the role in the token
+      switch (role) {
+        case "student":
+          navigate("/student-dashboard");
+          break;
+        case "warden":
+          navigate("/warden-dashboard");
+          break;
+        case "admin":
+          navigate("/admin-dashboard");
+          break;
+        default:
+          setError("Unknown role.");
+          break;
       }
     } catch (error) {
-      setError(
-        error.response?.data?.message || "An error occurred. Please try again."
-      );
+      if (error.response) {
+        setError(error.response.data?.message || "Login failed.");
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +121,7 @@ const SignIn = () => {
             </button>
           </fieldset>
 
-          <button type="submit" disabled={isLoading} className="login-btn">
+          <button type="submit" disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
