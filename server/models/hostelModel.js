@@ -3,29 +3,21 @@ const hostelModel = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  },
+  }, // Hostel name
   wardens: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
+      ref: "Users", // Refers to the userId field in the Users model
     },
-  ],
+  ], // Warden userIds
   students: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
+      ref: "Users", // Refers to the userId field in the Users model
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  ], // Student userIds
 });
 
-// Validation: Ensure that there is at least one warden
-hostelModel.path("wardens").validate(function (value) {
-  return value && value.length > 0; // At least one warden is required
-}, "A hostel must have at least one warden.");
+const Hostel = mongoose.model("Hostel", hostelModel);
 
-const Hostel = mongoose.model("Hostel", hostelModel,"Hostel");
 module.exports = Hostel;

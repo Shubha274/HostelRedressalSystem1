@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,23 +15,19 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
 
-  // Check for an existing token in localStorage
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userRole = localStorage.getItem("role");
-    if (token && userRole) {
-      setIsAuthenticated(true);
-      setRole(userRole);
-    }
-  }, []);
+  // Logout function
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setRole(null);
+  };
 
-  // Private route wrapper
-  const PrivateRoute = ({ children, roleRequired }) => {
+  // Private Route to protect pages
+  const PrivateRoute = ({ children, allowedRoles }) => {
     if (!isAuthenticated) {
-      return <Navigate to="/" />;
+      return <Navigate to="/login" />;
     }
-    if (role !== roleRequired) {
-      return <Navigate to="/" />;
+    if (!allowedRoles.includes(role)) {
+      return <Navigate to="/login" />;
     }
     return children;
   };
@@ -39,43 +35,57 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Public route */}
+        {/* Default Route */}
         <Route
           path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate to={`/${role}-dashboard`} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        {/* Public Route */}
+        <Route
+          path="/login"
           element={
             <SignIn setIsAuthenticated={setIsAuthenticated} setRole={setRole} />
           }
         />
 
-        {/* Private routes */}
+        {/* Private Routes */}
         <Route
           path="/student-dashboard"
           element={
-            <PrivateRoute roleRequired="student">
-              <StudentDboard />
+            <PrivateRoute allowedRoles={["student"]}>
+              <StudentDboard onLogout={handleLogout} />
             </PrivateRoute>
           }
         />
         <Route
           path="/warden-dashboard"
           element={
-            <PrivateRoute roleRequired="warden">
-              <WardenDboard />
+            <PrivateRoute allowedRoles={["warden"]}>
+              <WardenDboard onLogout={handleLogout} />
             </PrivateRoute>
           }
         />
         <Route
           path="/admin-dashboard"
           element={
-            <PrivateRoute roleRequired="admin">
-              <AdminDboard />
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminDboard onLogout={handleLogout} />
             </PrivateRoute>
           }
         />
+
+        {/* Issue Form for Both Students and Wardens */}
         <Route
           path="/issue-form"
           element={
-            <PrivateRoute roleRequired="student">
+            <PrivateRoute allowedRoles={["student", "warden"]}>
               <Forms />
             </PrivateRoute>
           }
