@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
 
-const SignIn = ({ onTokenUpdate }) => {
+const SignIn = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState(""); // State to manage the role
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -15,69 +14,59 @@ const SignIn = ({ onTokenUpdate }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setError(""); // Reset error
 
     const trimmedUserId = userId.trim();
     const trimmedPassword = password.trim();
 
+    // Check if fields are empty
     if (!trimmedUserId || !trimmedPassword) {
       setError("Please enter both your userId and password.");
       return;
     }
 
-    setIsLoading(true);
+    setIsLoading(true); // Set loading state
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
+      // Send login request to server
+      const response = await axios.post("http://localhost:8080", {
         userId: trimmedUserId,
         password: trimmedPassword,
       });
 
-      const { token, userData } = response.data;
+      const { role } = response.data; // Assuming the server response contains a `role` field
+      setRole(role); // Update the role state
 
-      // Update token in localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("userData", JSON.stringify(userData));
-
-      // Update Axios headers with the new token
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      // Notify parent component about the token update
-      if (onTokenUpdate) {
-        onTokenUpdate(token);
-      }
-
-      // Redirect based on the role in the userData
-      switch (userData.role) {
+      // Navigate based on the role
+      switch (role) {
         case "student":
-          navigate("/student-dashboard");
+          navigate("/student");
           break;
         case "warden":
-          navigate("/warden-dashboard");
+          navigate("/warden");
           break;
         case "admin":
-          navigate("/admin-dashboard");
+          navigate("/admin");
           break;
         default:
           setError("Unknown role.");
           break;
       }
     } catch (error) {
+      // Handle error from server response
       if (error.response) {
         setError(error.response.data?.message || "Login failed.");
       } else {
         setError("An unexpected error occurred.");
       }
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Reset loading state
     }
   };
 
   return (
     <div className="login-page">
       <header className="logo-section">
-        <FontAwesomeIcon className="logo-size" icon={faHome} color="white" />
-        <h1>BV</h1>
-        <h2>Redressal Portal</h2>
+        <h1>Login Portal</h1>
       </header>
 
       <main className="form-section">
@@ -91,15 +80,14 @@ const SignIn = ({ onTokenUpdate }) => {
 
           <fieldset>
             <legend>Enter your credentials</legend>
-            <label htmlFor="userId">University ID</label>
+            <label htmlFor="userId">User ID</label>
             <input
               id="userId"
               type="text"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
-              placeholder="Enter your university ID"
+              placeholder="Enter your user ID"
               required
-              autoComplete="username"
             />
 
             <label htmlFor="password">Password</label>
@@ -112,7 +100,6 @@ const SignIn = ({ onTokenUpdate }) => {
                 showPassword ? "Your password (visible)" : "Enter your password"
               }
               required
-              autoComplete="current-password"
             />
 
             <button
@@ -129,6 +116,9 @@ const SignIn = ({ onTokenUpdate }) => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        {/* Display role for debugging */}
+        {role && <p>Current Role: {role}</p>}
       </main>
     </div>
   );
