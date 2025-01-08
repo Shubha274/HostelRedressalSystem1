@@ -5,7 +5,7 @@ const userModel = new mongoose.Schema(
   {
     name: { type: String, required: true }, // Full name
     email: { type: String, unique: true, required: true }, // Email address
-    userId: { type: String, unique: true, required: true }, // University ID (used as password)
+    username: { type: String, unique: true, required: true }, // University ID (used as password)
     role: {
       type: String,
       enum: ["student", "warden", "admin"],

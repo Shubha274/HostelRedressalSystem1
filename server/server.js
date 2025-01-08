@@ -11,6 +11,7 @@ const cors = require("cors");
 // app.use(bodyParser.json());
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 dotenv.config();
 connectDB();
 // Use CORS middleware
@@ -29,7 +30,7 @@ app.use(express.json());
 // Routes
 
 app.use("/api", authRoutes);
-
+app.use("/api", userRoutes);
 // Use routes
 
 // Start server

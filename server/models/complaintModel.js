@@ -11,7 +11,7 @@ const complaintModel = new mongoose.Schema(
     name: { type: String, required: true }, // Name of the person raising the issue
     roomNo: { type: String, required: true }, // Room number
     issue: { type: String, required: true }, // Issue description
-    userId: { type: String, required: true }, // User ID from User schema
+    username: { type: String, required: true }, // User ID from User schema
     hostel: { type: String, required: true }, // Hostel name
     type: { type: String, enum: ["student", "warden"], required: true }, // Who raised the issue
     visibility: { type: String, enum: ["warden", "admin"], required: true }, // Who can view it

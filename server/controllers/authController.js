@@ -3,7 +3,8 @@ const jwt = require("jsonwebtoken");
 
 const loginUser = async (req, res) => {
   const { userId, password } = req.body;
-
+  console.log(userId);
+  console.log(password);
   // Validate inputs
   if (!userId || !password) {
     return res
@@ -19,7 +20,7 @@ const loginUser = async (req, res) => {
 
   try {
     // Check if the user exists in the database
-    const user = await Users.find({ userId }).limit(1); // Use findOne instead of find to return a single user
+    const user = await Users.findOne({ username: userId }); // Use findOne instead of find to return a single user
     console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found." });
