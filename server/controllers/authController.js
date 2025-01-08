@@ -34,7 +34,12 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
     );
-    res.cookie("accessToken", token, { httpOnly: true }).status(200).json({
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 3600000,
+    });
+    res.status(200).json({
       message: "Login successful",
       token,
       userData: user, // Return all fields from the database dynamically
