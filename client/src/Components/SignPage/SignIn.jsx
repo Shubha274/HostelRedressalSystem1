@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
-const SignIn = () => {
+const SignIn = ({ onTokenUpdate }) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -33,17 +32,22 @@ const SignIn = () => {
         password: trimmedPassword,
       });
 
-      const { token } = response.data;
+      const { token, userData } = response.data;
 
-      // Store the token in localStorage
+      // Update token in localStorage
       localStorage.setItem("token", token);
+      localStorage.setItem("userData", JSON.stringify(userData));
 
-      // Decode the token to get the user role
-      const decodedToken = jwtDecode(token);
-      const { role } = decodedToken; // Get role from decoded token
+      // Update Axios headers with the new token
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      // Redirect based on the role in the token
-      switch (role) {
+      // Notify parent component about the token update
+      if (onTokenUpdate) {
+        onTokenUpdate(token);
+      }
+
+      // Redirect based on the role in the userData
+      switch (userData.role) {
         case "student":
           navigate("/student-dashboard");
           break;
@@ -115,7 +119,7 @@ const SignIn = () => {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="toggle-password-btn"
-              aria-label="Toggle password visibility"
+              aria-label={showPassword ? "Hide password" : "Show password"}
             >
               {showPassword ? "Hide Password" : "Show Password"}
             </button>

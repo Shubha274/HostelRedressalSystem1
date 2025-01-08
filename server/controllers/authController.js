@@ -1,52 +1,46 @@
-const Users = require("../models/userModel"); // Ensure correct path
 const jwt = require("jsonwebtoken");
+const connectDB = require("../config/db"); // Ensure this is your MySQL connection module
 
 const loginUser = async (req, res) => {
-  const { userId, password } = req.body;
+  const { userId } = req.body;
+
+  console.log(userId);
 
   // Validate inputs
-  if (!userId || !password) {
-    return res
-      .status(400)
-      .json({ message: "Please provide both userId and password." });
-  }
-
-  if (userId !== password) {
-    return res
-      .status(400)
-      .json({ message: "UserId and password must be the same." });
+  if (!userId) {
+    return res.status(400).json({ message: "Please provide userId." });
   }
 
   try {
-    // Check if the user exists in the database
-    const user = await Users.find({ userId }).limit(1); // Use findOne instead of find to return a single user
-    console.log(user);
-    if (!user) {
+    // Connect to the database
+    const connection = await connectDB();
+
+    // Query the user by userId
+    const [rows] = await connection.execute(
+      "SELECT * FROM users WHERE username = ?",
+      [userId]
+    );
+
+    // Check if user exists
+    if (rows.length === 0) {
       return res.status(404).json({ message: "User not found." });
     }
 
-    // Generate a JWT token with the userId and role as payload
-    const token = jwt.sign(
-      { userId: user.userId, role: user.role }, // Include role in the token
-      process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" } // Token expires in 1 hour
-    );
+    const user = rows[0];
 
-    // Respond with token and user data
-    return res.status(200).json({
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user.username, role: user.role },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+    res.cookie("accessToken", token, { httpOnly: true }).status(200).json({
       message: "Login successful",
       token,
-      userData: {
-        name: user.name,
-        email: user.email,
-        userId: user.userId,
-        role: user.role,
-        hostel: user.hostel,
-        contact: user.contact,
-      },
+      userData: user, // Return all fields from the database dynamically
     });
   } catch (error) {
-    console.error("Error during login:", error);
+    console.error("Error during login:", error.message);
     return res.status(500).json({ message: "Server error. Please try again." });
   }
 };
