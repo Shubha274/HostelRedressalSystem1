@@ -1,26 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Sidebar.css";
 
 const Sidebar = ({ role }) => {
   return (
-    <div className="sidebar">
+    <div id="sidebar" className="sidebar">
       <ul>
         <li>
-          <Link to="/dashboard">Dashboard</Link>
+          <a href={`/${role}-dashboard`}>Dashboard</a>
         </li>
-        {role === "student" && (
+        {role === "student" || role === "warden" ? (
           <li>
-            <Link to="/issue-form">Issue Form</Link>
+            <a href="/issue-form">Issue Form</a>
           </li>
-        )}
-        {(role === "warden" || role === "admin") && (
+        ) : null}
+        {role === "warden" || role === "admin" ? (
           <li>
-            <Link to="/manage-issues">Manage Issues</Link>
+            <a href="/manage-issues">Manage Issues</a>
           </li>
-        )}
+        ) : null}
         <li>
-          <Link to="/chat-messenger">Chat Messenger</Link>
+          <a href="/chat-app">Chat App</a>
         </li>
       </ul>
     </div>
