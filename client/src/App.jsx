@@ -1,3 +1,5 @@
+// React App for BV Hostel Portal
+
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -5,14 +7,13 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
-import WardenDboard from "./Components/WardenDashboard/WardenDboard";
+import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
 import Navbar from "./Components/NavBar/Navbar";
 import Sidebar from "./Components/Sidebar/Sidebar";
-import "./App.css";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -37,8 +38,8 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        <Navbar logout={logout} />
-        <Sidebar role={role} />
+        {/* <Navbar logout={logout} />
+        {token && <Sidebar role={role} />} */}
         <div className="main-content">
           <Routes>
             <Route

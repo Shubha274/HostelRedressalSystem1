@@ -1,28 +1,62 @@
-import React from "react";
-import "./Sidebar.css";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faEdit,
+  faTasks,
+  faComments,
+} from "@fortawesome/free-solid-svg-icons";
+// import "./Sidebar.css";
 
 const Sidebar = ({ role }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+  };
+
   return (
-    <div id="sidebar" className="sidebar">
-      <ul>
-        <li>
-          <a href={`/${role}-dashboard`}>Dashboard</a>
-        </li>
-        {role === "student" || role === "warden" ? (
+    <>
+      {/* Sidebar */}
+      <div className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
+        <ul>
           <li>
-            <a href="/issue-form">Issue Form</a>
+            <a href={`/${role}-dashboard`}>
+              <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+              <span>Dashboard</span>
+            </a>
           </li>
-        ) : null}
-        {role === "warden" || role === "admin" ? (
+          {(role === "student" || role === "warden") && (
+            <li>
+              <a href="/issue-form">
+                <FontAwesomeIcon icon={faEdit} className="icon" />
+                <span>Issue Form</span>
+              </a>
+            </li>
+          )}
+          {(role === "warden" || role === "admin") && (
+            <li>
+              <a href="/manage-issues">
+                <FontAwesomeIcon icon={faTasks} className="icon" />
+                <span>Manage Issues</span>
+              </a>
+            </li>
+          )}
           <li>
-            <a href="/manage-issues">Manage Issues</a>
+            <a href="/chat-app">
+              <FontAwesomeIcon icon={faComments} className="icon" />
+              <span>Chat App</span>
+            </a>
           </li>
-        ) : null}
-        <li>
-          <a href="/chat-app">Chat App</a>
-        </li>
-      </ul>
-    </div>
+        </ul>
+      </div>
+
+      {/* Toggle Button */}
+      <button className="toggle-button" onClick={toggleSidebar}>
+        {isOpen ? "<<" : ">>"}
+      </button>
+    </>
   );
 };
 
