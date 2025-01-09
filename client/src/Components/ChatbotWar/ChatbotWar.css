@@ -1,0 +1,101 @@
+.chatbot-war-container {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  z-index: 1000;
+  color: black;
+}
+
+.chat-war-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  animation: pop-up 1s infinite;
+  transition: transform 0.3s ease;
+}
+
+.chat-war-icon img {
+  width: 30px;
+  height: 30px;
+}
+
+.chat-war-icon.open {
+  transform: scale(1.2);
+}
+
+.chat-war-window {
+  width: 300px;
+  height: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-war-header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.chat-war-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.chat-war-message {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.chat-war-message.bot {
+  background-color: #60adc6;
+}
+
+.chat-war-message.user {
+  background-color: #6193cd;
+  color: white;
+}
+
+.chat-war-input-container {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 5px;
+}
+
+.chat-war-input {
+  flex: 1;
+  border: none;
+  padding: 8px;
+}
+
+.send-war-button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  margin-left: 5px;
+}
+
+/* Pop-up animation */
+@keyframes pop-up {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
