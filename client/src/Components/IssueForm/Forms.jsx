@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./forms.css";
 import axios from "axios";
+import Navbar from "../NavBar/Navbar";
+import Sidebar from "../Sidebar/Sidebar";
+import { jwtDecode } from "jwt-decode";
+const token = localStorage.getItem("token");
+let role = null;
 
+// Decode the token to get the role if the token exists
+if (token) {
+  try {
+    const decodedToken = jwtDecode(token);
+    role = decodedToken.role; // Extract the role from the decoded token
+  } catch (error) {
+    console.error("Invalid token", error);
+  }
+}
 const Forms = ({ role }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -100,6 +114,7 @@ const Forms = ({ role }) => {
 
   return (
     <div className="container">
+      {/* <Navbar />;{token && <Sidebar role={role} />} */}
       <h2>Issue Generation Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

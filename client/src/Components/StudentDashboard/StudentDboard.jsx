@@ -22,11 +22,11 @@ const StudentDboard = () => {
   //
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <h1>our student dashboard page</h1>
       <p>i am shubha</p>
 
-      {token && <Sidebar role={role} />}
+      {/* {token && <Sidebar role={role} />} */}
 
       <ChatbotAdm />
     </>
