@@ -1,19 +1,31 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../Navbar/Navbar.css";
 import {
   faTachometerAlt,
   faEdit,
-  faTasks,
   faComments,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-// import "./Sidebar.css";
 
 const Sidebar = ({ role }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("open");
+    setIsOpen((prev) => !prev);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setIsDropdownOpen(false); // Close dropdown after navigation
   };
 
   return (
@@ -21,41 +33,42 @@ const Sidebar = ({ role }) => {
       {/* Sidebar */}
       <div className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
         <ul>
-          <li>
-            <a href={`/${role}-dashboard`}>
-              <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
-              <span>Dashboard</span>
-            </a>
+          <li onClick={() => handleNavigation(`/${role}-dashboard`)}>
+            <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
+            <span>Dashboard</span>
           </li>
           {(role === "student" || role === "warden") && (
-            <li>
-              <a href="/issue-form">
-                <FontAwesomeIcon icon={faEdit} className="icon" />
-                <span>Issue Form</span>
-              </a>
+            <li onClick={() => handleNavigation("/issue-form")}>
+              <FontAwesomeIcon icon={faEdit} className="icon" />
+              <span>Issue Form</span>
             </li>
           )}
-          {(role === "warden" || role === "admin") && (
-            <li>
-              <a href="/manage-issues">
-                <FontAwesomeIcon icon={faTasks} className="icon" />
-                <span>Manage Issues</span>
-              </a>
-            </li>
-          )}
-          <li>
-            <a href="/chat-app">
-              <FontAwesomeIcon icon={faComments} className="icon" />
-              <span>Chat App</span>
-            </a>
+          <li onClick={() => handleNavigation("/chat-app")}>
+            <FontAwesomeIcon icon={faComments} className="icon" />
+            <span>Chat App</span>
           </li>
         </ul>
       </div>
 
-      {/* Toggle Button */}
-      <button className="toggle-button" onClick={toggleSidebar}>
-        {isOpen ? "<<" : ">>"}
-      </button>
+      {/* Navbar for Small Screens */}
+      <div className="navbar">
+        <button className="navbar-toggle" onClick={toggleDropdown}>
+          <FontAwesomeIcon icon={isDropdownOpen ? faTimes : faBars} />
+        </button>
+        {isDropdownOpen && (
+          <ul className="dropdown-menu">
+            <li onClick={() => handleNavigation(`/${role}-dashboard`)}>
+              Dashboard
+            </li>
+            {(role === "student" || role === "warden") && (
+              <li onClick={() => handleNavigation("/issue-form")}>
+                Issue Form
+              </li>
+            )}
+            <li onClick={() => handleNavigation("/chat-app")}>Chat App</li>
+          </ul>
+        )}
+      </div>
     </>
   );
 };

@@ -1,17 +1,54 @@
 /* General Styles */
 * {
-  margin: 2px;
+  margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Ensures padding/margin don't affect layout */
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* Logout Button Styles */
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #071740;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 24px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .logout-button {
   background-color: #ff4d4d;
   color: white;
@@ -20,7 +57,6 @@ body {
   padding: 8px 15px;
   cursor: pointer;
   font-size: 14px;
-  margin-right: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -28,36 +64,38 @@ body {
   background-color: #e60000;
 }
 
-/* Navbar Styles */
-.navbar {
-  width: 100%;
-  background-color: #333;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0; /* Fixed to the top */
-  left: 0; /* Ensure the navbar is aligned to the left */
-  z-index: 1000;
-  padding: 10px 20px;
-  box-sizing: border-box; /* Ensure padding doesn't affect the layout */
-}
-
-/* Navbar Left and Right Alignment */
-.navbar-left,
-.navbar-right {
-  display: flex;
-  align-items: center;
-  overflow: hidden; /* Prevent horizontal overflow */
-}
-
-/* Toggle Button Styles */
 .navbar-toggle {
-  font-size: 30px;
+  font-size: 24px;
+  background: none;
+  border: none;
   color: white;
   cursor: pointer;
-  display: none; /* Hidden by default on larger screens */
+  display: none; /* Hidden on larger screens */
+}
+
+/* Dropdown Menu for Mobile */
+.navbar-dropdown {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #2c3e50;
+  color: white;
+  list-style: none;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.navbar-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-dropdown li:hover {
+  background-color: #3d566e;
 }
 
 /* Sidebar Styles */
@@ -67,18 +105,17 @@ body {
   background-color: #333;
   color: white;
   position: fixed;
-  top: 60px; /* Positioned just below the navbar */
-  left: 0;
+  top: 0;
+  left: -250px; /* Hidden by default */
   overflow-x: hidden;
-  transition: transform 0.3s ease;
+  transition: left 0.3s ease;
+  z-index: 999; /* Sidebar under navbar */
   display: flex;
   flex-direction: column;
-  z-index: 999; /* Sidebar below navbar */
-  transform: translateX(-100%); /* Initially hidden off-screen */
 }
 
 .sidebar.open {
-  transform: translateX(0); /* Slide in when open */
+  left: 0; /* Slide in when open */
 }
 
 .sidebar ul {
@@ -103,18 +140,17 @@ body {
 
 .sidebar a:hover {
   background-color: #575757;
-  color: #fff;
 }
 
 .icon {
   font-size: 20px;
 }
 
-/* Toggle Button for Sidebar */
+/* Sidebar Toggle Button */
 .toggle-button {
   position: fixed;
-  top: 60px; /* Adjust to place below the navbar */
-  left: 250px;
+  top: 20px;
+  left: 270px;
   background-color: #333;
   color: white;
   border: none;
@@ -124,32 +160,32 @@ body {
   border-radius: 5px;
   transition: left 0.3s ease;
   z-index: 1001;
-  display: none; /* Hidden when navbar toggle is used */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .navbar-right {
-    display: flex; /* Show navbar toggle button */
+  .navbar-toggle {
+    display: block; /* Show on smaller screens */
   }
 
-  .navbar-toggle {
-    display: block; /* Visible on smaller screens */
+  .navbar-right {
+    display: none; /* Hide on smaller screens */
+  }
+
+  .navbar-dropdown {
+    display: block; /* Show dropdown menu */
   }
 
   .sidebar {
     width: 250px;
-    position: fixed;
-    top: 60px;
-    left: -250px; /* Initially hidden off-screen */
-    transform: translateX(-250px); /* Sidebar starts off-screen */
+    left: -250px; /* Initially hidden */
   }
 
   .sidebar.open {
-    transform: translateX(0); /* Slide in when open */
+    left: 0; /* Slide in on toggle */
   }
 
   .toggle-button {
-    display: block; /* Show toggle button */
+    display: none; /* Hide toggle button in responsive design */
   }
 }

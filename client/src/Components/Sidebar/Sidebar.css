@@ -1,27 +1,68 @@
-/* Sidebar Styles */
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #333;
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #071740;
   color: white;
   position: fixed;
   top: 0;
   left: 0;
-  overflow-x: hidden;
-  transition: width 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar.collapsed {
-  width: 60px;
+/* .navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+} */
+
+.navbar-toggle {
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  display: none; /* Hidden on larger screens */
+  background: none;
+  border: none;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #2c3e50;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden by default */
+  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
+}
+
+.sidebar.open {
+  transform: translateX(250px);
 }
 
 .sidebar ul {
   list-style-type: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .sidebar li {
@@ -34,30 +75,46 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar a:hover {
   background-color: #575757;
-  color: #fff;
 }
 
-.icon {
-  font-size: 16px;
-}
-
-/* Toggle Button Styles */
+/* Sidebar Toggle Button */
 .toggle-button {
   position: fixed;
-  top: 20px;
-  left: 260px;
+  top: 10px;
+  left: 250px;
   background-color: #333;
   color: white;
   border: none;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 5px;
   transition: left 0.3s ease;
+  z-index: 1001;
+  display: none; /* Hidden for small screens */
 }
 
-.sidebar.collapsed + .toggle-button {
-  left: 70px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar-toggle {
+    display: block; /* Show navbar toggle on small screens */
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Slide in sidebar on toggle */
+  }
+
+  .toggle-button {
+    display: none; /* Hidden when navbar toggle is used */
+  }
 }
