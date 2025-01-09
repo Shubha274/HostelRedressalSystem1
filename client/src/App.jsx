@@ -7,9 +7,9 @@ import {
 import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
-import WardenDboard from "./Components/WardenDashboard/WardenDboard";
+import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
-import Dboard from "./Components/Daboard/Dboard";
+import Dboard from "./Components/Dboard/Dboard";
 const App = () => {
   const token = localStorage.getItem("token");
   let role = null;
