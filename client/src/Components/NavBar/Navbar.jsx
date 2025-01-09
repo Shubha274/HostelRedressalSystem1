@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faHotel,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -26,31 +26,22 @@ const Navbar = () => {
   };
 
   return (
-    <div
-      className="navbar"
-      style={{
-        backgroundColor: "#071740",
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        zIndex: 1000,
-      }}
-    >
+    <nav className="navbar">
       <div className="navbar-left">
         <span className="logo-text">
-          <FontAwesomeIcon icon={faHotel} style={{ marginRight: "10px" }} /> BV
-          Hostel Portal
+          <FontAwesomeIcon icon={faHotel} className="logo-icon" /> BV Hostel
+          Portal
         </span>
       </div>
       <div className="navbar-right">
         <button className="logout-button" onClick={handleLogout}>
           Logout <FontAwesomeIcon icon={faSignOutAlt} />
         </button>
-        <span className="navbar-toggle" onClick={toggleSidebar}>
+        <button className="navbar-toggle" onClick={toggleSidebar}>
           <FontAwesomeIcon icon={faBars} />
-        </span>
+        </button>
       </div>
-    </div>
+    </nav>
   );
 };
 

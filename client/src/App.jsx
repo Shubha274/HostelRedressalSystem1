@@ -12,7 +12,11 @@ import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
+<<<<<<< HEAD
 import Dboard from "./Components/Daboard/Dboard";
+=======
+import Dboard from "./Components/Dboard/Dboard";
+>>>>>>> roles
 import Navbar from "./Components/NavBar/Navbar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Forms from "./Components/IssueForm/Forms";

@@ -1,23 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../Navbar/Navbar.css";
 import {
   faTachometerAlt,
   faEdit,
-  faTasks,
   faComments,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = ({ role }) => {
   const [isOpen, setIsOpen] = useState(true);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+>>>>>>> roles
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
   };
 
+<<<<<<< HEAD
   const handleNavigation = (path) => {
     navigate(path);
+=======
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+    setIsDropdownOpen(false); // Close dropdown after navigation
+>>>>>>> roles
   };
 
   return (
@@ -42,10 +57,25 @@ const Sidebar = ({ role }) => {
         </ul>
       </div>
 
-      {/* Toggle Button */}
-      <button className="toggle-button" onClick={toggleSidebar}>
-        {isOpen ? "<<" : ">>"}
-      </button>
+      {/* Navbar for Small Screens */}
+      <div className="navbar">
+        <button className="navbar-toggle" onClick={toggleDropdown}>
+          <FontAwesomeIcon icon={isDropdownOpen ? faTimes : faBars} />
+        </button>
+        {isDropdownOpen && (
+          <ul className="dropdown-menu">
+            <li onClick={() => handleNavigation(`/${role}-dashboard`)}>
+              Dashboard
+            </li>
+            {(role === "student" || role === "warden") && (
+              <li onClick={() => handleNavigation("/issue-form")}>
+                Issue Form
+              </li>
+            )}
+            <li onClick={() => handleNavigation("/chat-app")}>Chat App</li>
+          </ul>
+        )}
+      </div>
     </>
   );
 };
