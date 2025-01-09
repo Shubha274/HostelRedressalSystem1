@@ -14,25 +14,15 @@ const Sidebar = ({ role }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
->>>>>>> roles
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
   };
 
-<<<<<<< HEAD
-  const handleNavigation = (path) => {
-    navigate(path);
-=======
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
-
   const handleNavigation = (path) => {
     navigate(path);
     setIsDropdownOpen(false); // Close dropdown after navigation
->>>>>>> roles
   };
 
   return (

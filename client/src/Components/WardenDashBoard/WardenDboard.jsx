@@ -4,10 +4,7 @@ import "./WardenDboard.css";
 import ChatbotWar from "../ChatbotWar/ChatbotWar";
 
 import Navbar from "../NavBar/Navbar";
-<<<<<<< HEAD
 
-=======
->>>>>>> roles
 import Sidebar from "../Sidebar/Sidebar";
 import { jwtDecode } from "jwt-decode";
 const token = localStorage.getItem("token");
@@ -22,22 +19,13 @@ if (token) {
     console.error("Invalid token", error);
   }
 }
-<<<<<<< HEAD
-const WardenDboard = () => {
-  return (
-    <div>
-      {/* <Navbar /> */}
-      <ChatbotWar />
-
-      {/* {token && <Sidebar role={role} />} */}
-=======
 
 const WardenDboard = () => {
   return (
     <div>
       <Navbar />
 
->>>>>>> roles
+      <ChatbotWar />
       <pre>hello i am the warden of hostel sangam</pre>
       {token && <Sidebar role={role} />}
     </div>
