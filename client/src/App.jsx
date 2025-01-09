@@ -1,43 +1,67 @@
-import { useState } from "react";
-import StudentDashboard from "./Components/StudentDashboard/StudentDashboard";
-import ChatbotAdm from "./Components/ChatbotAdm/ChatbotAdm";
-import RoleBasedTable from "./Components/Tables/RoleBasedTable";
-import ChatbotWar from "./Components/ChatbotWar/ChatbotWar";
-import ChatbotHeadWar from "./Components/ChatbotHeadWar/ChatbotHeadWar";
 
-function App() {
-  const [role, setRole] = useState("student");
-  const [status, setStatus] = useState("Pending");
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
+import SignIn from "./Components/SignPage/SignIn";
+import StudentDboard from "./Components/StudentDashboard/StudentDboard";
+import WardenDboard from "./Components/WardenDashboard/WardenDboard";
+import AdminDboard from "./Components/AdminDashboard/AdminDboard";
+
+const App = () => {
+  const token = localStorage.getItem("token");
+  let role = null;
+
+  // Decode the token to get the role if the token exists
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      role = decodedToken.role; // Extract the role from the decoded token
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
 
   return (
-    <>
-      <StudentDashboard />
-
-      <ChatbotHeadWar />
-      <ChatbotWar />
-      <ChatbotAdm />
-      
-      <div className="controls">
-        <label>
-          Role:
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="student">Student</option>
-            <option value="warden">Warden</option>
-          </select>
-        </label>
-        <label>
-          Status:
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="Pending">Pending</option>
-            <option value="Resolved">Resolved</option>
-          </select>
-        </label>
-      </div>
-
-      {/* Role-Based Table */}
-      <RoleBasedTable role={role} status={status} />
-    </>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            token ? (
+              <Navigate to={`/${role}-dashboard`} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route path="/login" element={<SignIn />} />
+        <Route
+          path="/student-dashboard"
+          element={
+            role === "student" ? <StudentDboard /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/warden-dashboard"
+          element={
+            role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
+          }
+        />
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+      </Routes>
+    </Router>
   );
-}
+};
+
 
 export default App;
