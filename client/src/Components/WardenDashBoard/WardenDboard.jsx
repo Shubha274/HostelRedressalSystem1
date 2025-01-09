@@ -1,8 +1,10 @@
 import React from "react";
 import "./WardenDboard.css";
+import Navbar from "../NavBar/Navbar";
 const WardenDboard = () => {
   return (
     <div>
+      <Navbar />
       <pre>hello i am the warden of hostel sangam</pre>
     </div>
   );
