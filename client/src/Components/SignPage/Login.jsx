@@ -124,7 +124,7 @@ const Login = ({ setRole, setUserId }) => {
       // Decode token to get userId and role
       const decoded = jwt_decode(token);
       setUserId(decoded.id);
-      setRole(role);
+      setRole(decoded.role);
 
       // Redirect user based on their role
       if (role === "student") {

@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
-const SignIn = ({ onTokenUpdate }) => {
+const SignIn = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,27 +28,25 @@ const SignIn = ({ onTokenUpdate }) => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
-        userId: trimmedUserId,
-        password: trimmedPassword,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          userId: trimmedUserId,
+          password: trimmedPassword,
+        }
+      );
 
-      const { token, userData } = response.data;
+      const { token } = response.data;
 
-      // Update token in localStorage
+      // Store the token in localStorage
       localStorage.setItem("token", token);
-      localStorage.setItem("userData", JSON.stringify(userData));
 
-      // Update Axios headers with the new token
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      // Decode the token to get the user role
+      const decodedToken = jwtDecode(token);
+      const { role } = decodedToken; // Get role from decoded token
 
-      // Notify parent component about the token update
-      if (onTokenUpdate) {
-        onTokenUpdate(token);
-      }
-
-      // Redirect based on the role in the userData
-      switch (userData.role) {
+      // Redirect based on the role in the token
+      switch (role) {
         case "student":
           navigate("/student-dashboard");
           break;
@@ -119,7 +118,7 @@ const SignIn = ({ onTokenUpdate }) => {
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="toggle-password-btn"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label="Toggle password visibility"
             >
               {showPassword ? "Hide Password" : "Show Password"}
             </button>

@@ -1,8 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const { getUserById } = require("../controllers/userInfoControllers"); // Adjust path to your controller
+const validToken = require("../middleware/authMiddleware");
+const authorizeRoles = require("../middleware/roleMiddleware");
 
-// Route to fetch user details by userId
-router.get("/user/:userId", getUserById);
+// Route to fetch student
+router.get("/student", validToken, authorizeRoles("student"), (req, res) => {
+  res.json({ message: "Welcome student" });
+});
+
+// Route to fetch by admin
+router.get("/admin", validToken, authorizeRoles("admin"), (req, res) => {
+  res.json({ message: "Welcome admin" });
+});
+
+// Route to fetch by warden
+router.get("/warden", validToken, authorizeRoles("warden"), (req, res) => {
+  res.json({ message: "Welcome warden" });
+});
 
 module.exports = router;
