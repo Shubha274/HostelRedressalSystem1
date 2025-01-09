@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "./StudentDboard.css";
 import "../IssueForm/Forms";
+import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 const StudentDboard = () => {
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:8080/api");
@@ -14,6 +15,7 @@ const StudentDboard = () => {
       <h1>our student dashboard page</h1>
       <p>i am shubha</p>
       {/* <Forms /> */}
+      <ChatbotAdm />
     </>
   );
 };

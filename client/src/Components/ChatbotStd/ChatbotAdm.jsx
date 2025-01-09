@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./ChatbotAdm.css";
-
 const ChatbotAdm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -32,10 +31,22 @@ const ChatbotAdm = () => {
           <div>
             <strong>Here are the awesome features of this website:</strong>
             <ul>
-              <li>💬 <strong>Chat & Video Chat:</strong> Seamlessly communicate with the warden.</li>
-              <li>📝 <strong>Grievance Form:</strong> Submit and explain your concerns easily.</li>
-              <li>📊 <strong>Dashboard:</strong> Track the status and progress of your grievances in real-time.</li>
-              <li>🔒 <strong>Secure Platform:</strong> Your data is safe and confidential.</li>
+              <li>
+                💬 <strong>Chat & Video Chat:</strong> Seamlessly communicate
+                with the warden.
+              </li>
+              <li>
+                📝 <strong>Grievance Form:</strong> Submit and explain your
+                concerns easily.
+              </li>
+              <li>
+                📊 <strong>Dashboard:</strong> Track the status and progress of
+                your grievances in real-time.
+              </li>
+              <li>
+                🔒 <strong>Secure Platform:</strong> Your data is safe and
+                confidential.
+              </li>
             </ul>
           </div>
         );
@@ -43,7 +54,10 @@ const ChatbotAdm = () => {
       } else {
         setMessages((prev) => [
           ...prev,
-          { from: "bot", text: "Sorry, I didn't quite get that. Can you rephrase or ask something else?" },
+          {
+            from: "bot",
+            text: "Sorry, I didn't quite get that. Can you rephrase or ask something else?",
+          },
         ]);
       }
     }, 1000);
@@ -51,8 +65,14 @@ const ChatbotAdm = () => {
 
   return (
     <div className="chatbot-container">
-      <div className={`chat-icon ${isOpen ? "open" : ""}`} onClick={handleIconClick}>
-        <img src="https://cdn-icons-png.flaticon.com/512/2190/2190552.png" alt="Chat Icon" />
+      <div
+        className={`chat-icon ${isOpen ? "open" : ""}`}
+        onClick={handleIconClick}
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2190/2190552.png"
+          alt="Chat Icon"
+        />
       </div>
       {isOpen && (
         <div className="chat-window">
@@ -61,7 +81,9 @@ const ChatbotAdm = () => {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`chat-message ${msg.from === "user" ? "user" : "bot"}`}
+                className={`chat-message ${
+                  msg.from === "user" ? "user" : "bot"
+                }`}
               >
                 {msg.text}
               </div>

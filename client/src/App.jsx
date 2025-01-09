@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,7 +9,7 @@ import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashboard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
-
+import Dboard from "./Components/Daboard/Dboard";
 const App = () => {
   const token = localStorage.getItem("token");
   let role = null;
@@ -24,7 +23,6 @@ const App = () => {
       console.error("Invalid token", error);
     }
   }
-
   return (
     <Router>
       <Routes>
@@ -57,11 +55,15 @@ const App = () => {
             role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
           }
         />
+
         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        {/* <Route path="/" element={<Dboard />} />
+        <Route path="/admin" element={<AdminDboard />} />
+        <Route path="/warden" element={<WardenDboard />} />
+        <Route path="/student" element={<StudentDboard />} /> */}
       </Routes>
     </Router>
   );
 };
-
 
 export default App;
