@@ -4,7 +4,6 @@ import "./WardenDboard.css";
 import ChatbotWar from "../ChatbotWar/ChatbotWar";
 
 import Navbar from "../NavBar/Navbar";
-import Navbar from "../NavBar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import { jwtDecode } from "jwt-decode";
 const token = localStorage.getItem("token");
