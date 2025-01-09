@@ -1,0 +1,64 @@
+/* General styles for the table */
+.table-container {
+  margin: 2px auto;
+  padding: 10px;
+  max-width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #007bff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+  color: black; /* Ensure all table text is black */
+}
+
+th {
+  background-color: #60adc6;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+/* Status-specific styling */
+td:last-child {
+  color: black; /* Status column text in black */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+    font-size: 0.8rem;
+  }
+
+  th, td {
+    padding: 5px;
+  }
+}
