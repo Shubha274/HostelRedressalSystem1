@@ -5,8 +5,9 @@ import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { jwtDecode } from "jwt-decode"; // Import jwt-decode
-
+import { useAuth } from "../../context/AuthContext";
 const SignIn = () => {
+  const { login } = useAuth(); // Access the login function from context
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -38,8 +39,8 @@ const SignIn = () => {
 
       const { token } = response.data;
 
-      // Store the token in localStorage
-      localStorage.setItem("token", token);
+      // Use the login function from context to update global state
+      login(token);
 
       // Decode the token to get the user role
       const decodedToken = jwtDecode(token);

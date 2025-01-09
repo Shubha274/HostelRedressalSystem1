@@ -26,7 +26,7 @@ const StudentDboard = () => {
       <h1>our student dashboard page</h1>
       <p>i am shubha</p>
 
-      {token && <Sidebar role={role} />}
+      <Sidebar role={role} />
 
       <ChatbotAdm />
     </>

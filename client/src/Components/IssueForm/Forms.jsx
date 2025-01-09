@@ -114,7 +114,7 @@ const Forms = ({ role }) => {
 
   return (
     <div className="container">
-      {/* <Navbar />;{token && <Sidebar role={role} />} */}
+      <Navbar />;<Sidebar />
       <h2>Issue Generation Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

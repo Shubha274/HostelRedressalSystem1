@@ -22,16 +22,16 @@ import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 const App = () => {
   const token = localStorage.getItem("token");
   let role = null;
-
-  // Decode the token to get the role if the token exists
   if (token) {
     try {
       const decodedToken = jwtDecode(token);
-      role = decodedToken.role; // Extract the role from the decoded token
+      role = decodedToken?.role; // Safely extract role
     } catch (error) {
-      console.error("Invalid token", error);
+      console.error("Token decoding failed:", error);
+      role = null; // Reset role to prevent issues
     }
   }
+
   // return (
   //   <Router>
   //     <Routes>

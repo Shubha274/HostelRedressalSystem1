@@ -1,20 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
   faHotel,
   faSignOutAlt,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
-  const toggleSidebar = () => {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("open");
-  };
 
   const handleLogout = () => {
     // Clear the token and other user data from localStorage
@@ -23,6 +19,11 @@ const Navbar = () => {
 
     // Redirect to the login page
     navigate("/login");
+  };
+
+  const handleGoBack = () => {
+    // This will take the user to the previous page in history
+    navigate(-1);
   };
 
   return (
@@ -34,6 +35,10 @@ const Navbar = () => {
         </span>
       </div>
       <div className="navbar-right">
+        <button className="back-button" onClick={handleGoBack}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+          Back
+        </button>
         <button className="logout-button" onClick={handleLogout}>
           Logout <FontAwesomeIcon icon={faSignOutAlt} />
         </button>
