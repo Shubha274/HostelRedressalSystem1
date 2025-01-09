@@ -5,6 +5,7 @@ const WardenDboard = () => {
   return (
     <div>
       <Navbar />
+      <Sidebar />
       <pre>hello i am the warden of hostel sangam</pre>
     </div>
   );

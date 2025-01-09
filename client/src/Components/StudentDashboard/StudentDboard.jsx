@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import "./StudentDboard.css";
 import "../IssueForm/Forms";
 import Navbar from "../NavBar/Navbar";
+import Sidebar from "../Sidebar/Sidebar";
+import ChatbotAdm from "../";
 const StudentDboard = () => {
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:8080/api");
@@ -14,6 +16,8 @@ const StudentDboard = () => {
     <>
       <h1>our student dashboard page</h1>
       <p>i am shubha</p>
+      <ChatbotAdm />
+      <Sidebar />
       <Navbar />
       {/* <Forms /> */}
     </>

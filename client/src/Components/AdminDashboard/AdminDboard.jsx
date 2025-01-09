@@ -4,6 +4,7 @@ const AdminDboard = () => {
   return (
     <div>
       <Navbar />
+      <Sidebar />
       <h1>hello i am the admin</h1>
     </div>
   );
