@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
 const SignIn = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState(""); // State to manage the role
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -14,59 +16,67 @@ const SignIn = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error
+    setError("");
 
     const trimmedUserId = userId.trim();
     const trimmedPassword = password.trim();
 
-    // Check if fields are empty
     if (!trimmedUserId || !trimmedPassword) {
       setError("Please enter both your userId and password.");
       return;
     }
 
-    setIsLoading(true); // Set loading state
+    setIsLoading(true);
     try {
-      // Send login request to server
-      const response = await axios.post("http://localhost:8080", {
-        userId: trimmedUserId,
-        password: trimmedPassword,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          userId: trimmedUserId,
+          password: trimmedPassword,
+        }
+      );
 
-      const { role } = response.data; // Assuming the server response contains a `role` field
-      setRole(role); // Update the role state
+      const { token } = response.data;
 
-      // Navigate based on the role
+      // Store the token in localStorage
+      localStorage.setItem("token", token);
+
+      // Decode the token to get the user role
+      const decodedToken = jwtDecode(token);
+      const { role } = decodedToken; // Get role from decoded token
+
+      // Redirect based on the role in the token
       switch (role) {
         case "student":
-          navigate("/student");
+          navigate("/student-dashboard");
           break;
         case "warden":
-          navigate("/warden");
+          navigate("/warden-dashboard");
           break;
         case "admin":
-          navigate("/admin");
+          navigate("/admin-dashboard");
           break;
         default:
           setError("Unknown role.");
           break;
       }
     } catch (error) {
-      // Handle error from server response
       if (error.response) {
         setError(error.response.data?.message || "Login failed.");
       } else {
         setError("An unexpected error occurred.");
       }
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="login-page">
       <header className="logo-section">
-        <h1>Login Portal</h1>
+        <FontAwesomeIcon className="logo-size" icon={faHome} color="white" />
+        <h1>BV</h1>
+        <h2>Redressal Portal</h2>
       </header>
 
       <main className="form-section">
@@ -80,14 +90,15 @@ const SignIn = () => {
 
           <fieldset>
             <legend>Enter your credentials</legend>
-            <label htmlFor="userId">User ID</label>
+            <label htmlFor="userId">University ID</label>
             <input
               id="userId"
               type="text"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
-              placeholder="Enter your user ID"
+              placeholder="Enter your university ID"
               required
+              autoComplete="username"
             />
 
             <label htmlFor="password">Password</label>
@@ -100,13 +111,14 @@ const SignIn = () => {
                 showPassword ? "Your password (visible)" : "Enter your password"
               }
               required
+              autoComplete="current-password"
             />
 
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="toggle-password-btn"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label="Toggle password visibility"
             >
               {showPassword ? "Hide Password" : "Show Password"}
             </button>
@@ -116,9 +128,6 @@ const SignIn = () => {
             {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
-
-        {/* Display role for debugging */}
-        {role && <p>Current Role: {role}</p>}
       </main>
     </div>
   );

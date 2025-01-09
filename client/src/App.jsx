@@ -1,66 +1,62 @@
-// const [token, setToken] = useState(localStorage.getItem("token"));
-// const [role, setRole] = useState(null);
-
-// useEffect(() => {
-//   if (token) {
-//     try {
-//       const decodedToken = jwtDecode(token);
-
-//       // Check token expiration
-//       if (decodedToken.exp * 1000 < Date.now()) {
-//         localStorage.removeItem("token");
-//         setToken(null);
-//         setRole(null);
-//       } else {
-//         setRole(decodedToken.role); // Set the role from the decoded token
-//       }
-//     } catch (error) {
-//       console.error("Invalid token:", error);
-//       localStorage.removeItem("token");
-//       setToken(null);
-//       setRole(null);
-//     }
-//   } else {
-//     setRole(null);
-//   }
-// }, [token]);
-
-// // Function to handle token updates after login
-// const handleTokenUpdate = (newToken) => {
-//   localStorage.setItem("token", newToken);
-//   setToken(newToken);
-// };
-
-// // Helper function to determine the dashboard path
-// const getDashboardPath = () => {
-//   switch (role) {
-//     case "student":
-//       return "/student-dashboard";
-//     case "warden":
-//       return "/warden-dashboard";
-//     case "admin":
-//       return "/admin-dashboard";
-//     default:
-//       return "/login";
-//   }
-// };
-
-import { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./Components/SignPage/Login";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
+import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashboard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
-import Forms from "./Components/IssueForm/Forms";
+
 const App = () => {
+  const token = localStorage.getItem("token");
+  let role = null;
+
+  // Decode the token to get the role if the token exists
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      role = decodedToken.role; // Extract the role from the decoded token
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/student-dashboard" element={<StudentDboard />} />
-        <Route path="/issue-form" element={<Forms />} />
-        <Route path="/warden-dashboard" element={<WardenDboard />} />
-        <Route path="/admin-dashboard" element={<AdminDboard />} />
+        <Route
+          path="/"
+          element={
+            token ? (
+              <Navigate to={`/${role}-dashboard`} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route path="/login" element={<SignIn />} />
+        <Route
+          path="/student-dashboard"
+          element={
+            role === "student" ? <StudentDboard /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/warden-dashboard"
+          element={
+            role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
+          }
+        />
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </Router>
   );
