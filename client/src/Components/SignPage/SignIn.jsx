@@ -22,20 +22,17 @@ const SignIn = () => {
     e.preventDefault();
     setError("");
 
-    // const trimmedUserId = userId.trim();
-    // const trimmedPassword = password.trim();
+    const trimmedUserId = userId.trim();
+    const trimmedPassword = password.trim();
 
-    if (inputs.userId || !inputs.password) {
+    if (!trimmedUserId || !trimmedPassword) {
       setError("Please enter both your userId and password.");
       return;
     }
 
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/login",
-        inputs
-      );
+      const response = await axios.post("http://localhost:8080/api/login");
 
       const { token } = response.data;
 
@@ -107,7 +104,7 @@ const SignIn = () => {
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={handleChange}
               placeholder={
                 showPassword ? "Your password (visible)" : "Enter your password"
               }
@@ -117,7 +114,7 @@ const SignIn = () => {
 
             <button
               type="button"
-              onClick={}
+              onClick={() => setShowPassword(!showPassword)}
               className="toggle-password-btn"
               aria-label="Toggle password visibility"
             >
