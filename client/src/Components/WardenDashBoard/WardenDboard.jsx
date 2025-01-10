@@ -24,7 +24,7 @@ const WardenDboard = () => {
   return (
     <div>
       <Navbar />
-
+      <Sidebar />
       <ChatbotWar />
       <pre>hello i am the warden of hostel sangam</pre>
       {/* {token && <Sidebar role={role} />} */}

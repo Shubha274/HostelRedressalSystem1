@@ -45,7 +45,7 @@ const SignIn = () => {
       // Decode the token to get the user role
       // const decodedToken = jwtDecode(token);
       // const { role } = decodedToken;
-      navigate("/student-dashboard");
+      navigate("/dashboard");
     } catch (error) {
       if (error.response) {
         setError(error.response.data?.message || "Login failed.");

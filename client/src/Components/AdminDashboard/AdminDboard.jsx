@@ -21,7 +21,7 @@ const AdminDboard = () => {
       <Navbar />
       <h1>hello i am the admin</h1>
       <ChatbotHeadWar />
-      {token && <Sidebar role={role} />}
+      <Sidebar />
     </div>
   );
 };

@@ -11,11 +11,11 @@ const StudentDboard = () => {
   //
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <h1>our student dashboard page</h1>
       <p>i am shubha</p>
 
-      {/* <Sidebar /> */}
+      <Sidebar />
 
       <ChatbotAdm />
     </>

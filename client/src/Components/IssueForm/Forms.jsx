@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../NavBar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import { jwtDecode } from "jwt-decode";
+import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 const token = localStorage.getItem("token");
 let role = null;
 
@@ -115,6 +116,7 @@ const Forms = ({ role }) => {
   return (
     <div className="container">
       <Navbar />;<Sidebar />
+      <ChatbotAdm />
       <h2>Issue Generation Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

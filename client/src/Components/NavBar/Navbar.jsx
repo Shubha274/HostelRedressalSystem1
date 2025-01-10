@@ -21,11 +21,11 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  // const handleGoBack = () => {
-  //   // This will take the user to the previous page in history
-  //   navigate(-1);
-  // };
-
+  const handleGoBack = () => {
+    // Navigate to the previous page in history
+    navigate(-1);
+  };
+  const toggleSidebar = () => setIsOpen((prev) => !prev);
   return (
     <nav className="navbar">
       <div className="navbar-left">
