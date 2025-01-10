@@ -116,6 +116,8 @@ const App = () => {
                 role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
               }
             />
+            <Route path="/issue-form" element={<Forms />} />
+            <Route path="/chat-app" element={<ChatMessenger />} />
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </div>
