@@ -54,7 +54,7 @@ const App = () => {
     <><><Router>
       <div id="links">
         <Link to="/">Home</Link>
-        <Link to="/Components/Voice/blog">Blog</Link>
+        <Link to="/blog">Blog</Link>
         <Link to="/contact">Contact</Link>
       </div>
       <div className="app">
@@ -102,9 +102,9 @@ token && role ? (
             <Route path="/dashboard" element={<Dashboards />} />
             <Route path="/chart" element={<Chart />} />
             <Route path="/student-dashboard" element={<StudentDboard />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/contact" element={<Contact/>} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             {/* Fallback Route*/}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
