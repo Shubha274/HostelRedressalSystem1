@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { jwtDecode } from "jwt-decode";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -44,24 +43,9 @@ const SignIn = () => {
       localStorage.setItem("token", token);
 
       // Decode the token to get the user role
-      const decodedToken = jwtDecode(token);
-      const { role } = decodedToken;
-
-      // Redirect based on the role in the token
-      switch (role) {
-        case "student":
-          navigate("/student-dashboard");
-          break;
-        case "warden":
-          navigate("/warden-dashboard");
-          break;
-        case "admin":
-          navigate("/admin-dashboard");
-          break;
-        default:
-          setError("Unknown role.");
-          break;
-      }
+      // const decodedToken = jwtDecode(token);
+      // const { role } = decodedToken;
+      navigate("/student-dashboard");
     } catch (error) {
       if (error.response) {
         setError(error.response.data?.message || "Login failed.");

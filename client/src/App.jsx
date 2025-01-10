@@ -14,6 +14,7 @@ import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
 import Forms from "./Components/IssueForm/Forms";
 import ChatMessenger from "./Components/ChatApp/ChatMessenger";
+import Dashboards from "./Components/Dasboard/Dashboards";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -35,21 +36,21 @@ const App = () => {
         <div className="main-content">
           <Routes>
             {/* Route for Login */}
-            <Route path="/login" element={<SignIn />} />
+
             {/* Default Route*/}
-            <Route
+            {/* <Route
               path="/"
               element={
                 token && role ? (
-                  <Navigate to={`/${role}-dashboard`} />
+                  <Navigate to="/student-dashboard" />
                 ) : (
                   <Navigate to="/login" />
                 )
               }
-            />
-
+            /> */}
+            <Route path="/login" element={<SignIn />} />
             {/* Student Dashboard */}
-            <Route
+            {/* <Route
               path="/student-dashboard"
               element={
                 role === "student" ? (
@@ -58,7 +59,7 @@ const App = () => {
                   <Navigate to="/login" />
                 )
               }
-            />
+            /> */}
 
             {/* Warden Dashboard */}
             <Route
@@ -77,6 +78,8 @@ const App = () => {
             {/* Additional Routes */}
             <Route path="/issue-form" element={<Forms />} />
             <Route path="/chat-app" element={<ChatMessenger />} />
+            <Route path="/dashboard" element={<Dashboards />} />
+            <Route path="/student-dashboard" element={<StudentDboard />} />
             {/* Fallback Route */}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>

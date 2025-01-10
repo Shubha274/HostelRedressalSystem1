@@ -10,7 +10,7 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = ({ role }) => {
+const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -19,7 +19,18 @@ const Sidebar = ({ role }) => {
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
   };
+  const token = localStorage.getItem("token");
+  let role = null;
 
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      role = decodedToken.role; // Extract the role from the decoded token
+      console.log("Decoded Role:", role); // Debugging log
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
   const handleNavigation = (path) => {
     navigate(path);
     setIsDropdownOpen(false); // Close dropdown after navigation
