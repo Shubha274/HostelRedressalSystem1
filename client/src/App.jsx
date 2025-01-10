@@ -7,7 +7,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Correct import
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
