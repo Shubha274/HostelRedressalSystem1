@@ -34,20 +34,28 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
     );
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 3600000,
-    });
-    res.status(200).json({
-      message: "Login successful",
-      token,
-      userData: user, // Return all fields from the database dynamically
-    });
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({
+        message: "Login successful",
+        token,
+        userData: user, // Return all fields from the database dynamically
+      });
   } catch (error) {
     console.error("Error during login:", error.message);
     return res.status(500).json({ message: "Server error. Please try again." });
   }
 };
-
-module.exports = { loginUser };
+const logout = (req, res) => {
+  res
+    .clearCookie("token", {
+      secure: true,
+      sameSite: "none",
+    })
+    .status(500)
+    .json({ message: "User logged out" });
+};
+module.exports = { loginUser, logout };
