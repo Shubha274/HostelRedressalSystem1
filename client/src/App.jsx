@@ -51,7 +51,7 @@ const App = () => {
   }
 
   return (
-    <Router>
+  <Router>
       <div id="links">
         <Link to="/">Home</Link>
         <Link to="/blog">Blog</Link>
@@ -79,7 +79,7 @@ token && role ? (
 )
 }
 /> */}
-            {/* <Route path="/login" element={<SignIn />} /> */ */}
+            {/* <Route path="/login" element={<SignIn />} /> */}
             {/* Student Dashboard */}
             {/* <Route
               path="/student-dashboard"
@@ -111,8 +111,7 @@ token && role ? (
         </div>
       </div>
     </Router>
-   // <p id="transcript">Transcript: {transcript}</p>
-  //  <button onClick={SpeechRecognition.startListening}>Start</button>
+    
   );
 };
 
