@@ -17,6 +17,7 @@ import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 import Dashboards from "./Components/Dasboard/Dashboards";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Chart from "./Components/Chartss/Chart";
+import Blog from "./Components/Voice/Blog";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -90,6 +91,7 @@ const App = () => {
             <Route path="/chat-app" element={<ChatMessenger />} />
             <Route path="/dashboard" element={<Dashboards />} />
             <Route path="/chart" element={<Chart />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/student-dashboard" element={<StudentDboard />} />
             {/* Fallback Route*/}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
