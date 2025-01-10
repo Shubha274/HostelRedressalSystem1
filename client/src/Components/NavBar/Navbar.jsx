@@ -11,7 +11,6 @@ import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
   const handleLogout = () => {
     // Clear the token and other user data from localStorage
     localStorage.removeItem("token");

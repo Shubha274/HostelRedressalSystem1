@@ -44,7 +44,7 @@ const SignIn = () => {
 
       // Decode the token to get the user role
       const decodedToken = jwtDecode(token);
-      const { role } = decodedToken;
+      let { role } = decodedToken;
       switch (role) {
         case "student":
           navigate("/student-dashboard");
@@ -61,7 +61,7 @@ const SignIn = () => {
       }
     } catch (error) {
       if (error.response) {
-        setError(error.response.data?.message || "Login failed.");
+        setError(error.message || "Login failed.");
       } else {
         setError("An unexpected error occurred.");
       }
@@ -70,17 +70,7 @@ const SignIn = () => {
     }
   };
 
-      // navigate("/dashboard");
-    } catch (error) {
-      if (error.response) {
-        setError(error.response.data?.message || "Login failed.");
-      } else {
-        setError("An unexpected error occurred.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // navigate("/dashboard");
 
   return (
     <div className="login-page">

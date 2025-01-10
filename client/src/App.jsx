@@ -37,8 +37,8 @@ const App = () => {
         <div className="main-content">
           <Routes>
             {/* Route for Login */}
-            {/* <Route
-              path="/login"
+            <Route
+              path="/"
               element={
                 token ? (
                   <Navigate to={`/${role}-dashboard`} />
@@ -46,7 +46,7 @@ const App = () => {
                   <Navigate to="/login" />
                 )
               }
-            /> */}
+            />
             {/* Default Route*/}
             {/* <Route
               path="/"
