@@ -96,7 +96,6 @@ const App = () => {
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/home" element={<Home />}/>
-            <Route path="/student-dashboard" element={<StudentDboard />} />
             {/* Fallback Route*/}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
