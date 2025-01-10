@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode
-import { useAuth } from "../../context/AuthContext";
+
 const SignIn = () => {
-  const { login } = useAuth(); // Access the login function from context
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,10 +18,7 @@ const SignIn = () => {
     e.preventDefault();
     setError("");
 
-    const trimmedUserId = userId.trim();
-    const trimmedPassword = password.trim();
-
-    if (!trimmedUserId || !trimmedPassword) {
+    if (!userId.trim() || !password.trim()) {
       setError("Please enter both your userId and password.");
       return;
     }
@@ -30,23 +26,14 @@ const SignIn = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        {
-          userId: trimmedUserId,
-          password: trimmedPassword,
-        }
+        `http://localhost:8080/api/auth/login`, // Use environment variable
+        { userId: userId.trim(), password: password.trim() }
       );
 
       const { token } = response.data;
-
-      // Use the login function from context to update global state
-      login(token);
-
-      // Decode the token to get the user role
       const decodedToken = jwtDecode(token);
-      const { role } = decodedToken; // Get role from decoded token
+      const { role } = decodedToken;
 
-      // Redirect based on the role in the token
       switch (role) {
         case "student":
           navigate("/student-dashboard");
@@ -62,11 +49,7 @@ const SignIn = () => {
           break;
       }
     } catch (error) {
-      if (error.response) {
-        setError(error.response.data?.message || "Login failed.");
-      } else {
-        setError("An unexpected error occurred.");
-      }
+      setError(error.response?.data?.message || "Login failed.");
     } finally {
       setIsLoading(false);
     }
@@ -83,11 +66,7 @@ const SignIn = () => {
       <main className="form-section">
         <form onSubmit={handleLogin} className="login-form">
           <h2>Login</h2>
-          {error && (
-            <p className="error-message" aria-live="polite">
-              {error}
-            </p>
-          )}
+          {error && <p className="error-message">{error}</p>}
 
           <fieldset>
             <legend>Enter your credentials</legend>
@@ -108,9 +87,7 @@ const SignIn = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder={
-                showPassword ? "Your password (visible)" : "Enter your password"
-              }
+              placeholder="Enter your password"
               required
               autoComplete="current-password"
             />
@@ -121,7 +98,7 @@ const SignIn = () => {
               className="toggle-password-btn"
               aria-label="Toggle password visibility"
             >
-              {showPassword ? "Hide Password" : "Show Password"}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </fieldset>
 
