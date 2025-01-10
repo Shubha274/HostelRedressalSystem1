@@ -17,7 +17,7 @@ import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 import Dashboards from "./Components/Dasboard/Dashboards";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Chart from "./Components/Chartss/Chart";
-import Chart from "./Components/Voice/Blog";
+import Blog from "./Components/Voice/Blog";
 
 const App = () => {
   const token = localStorage.getItem("token");
