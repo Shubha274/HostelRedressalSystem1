@@ -16,18 +16,18 @@ import Forms from "./Components/IssueForm/Forms";
 import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 
 const App = () => {
-  const token = localStorage.getItem("token");
-  let role = null;
+  // const token = localStorage.getItem("token");
+  // let role = null;
 
-  if (token) {
-    try {
-      const decodedToken = jwtDecode(token);
-      role = decodedToken.role; // Extract the role from the decoded token
-      console.log("Decoded Role:", role); // Debugging log
-    } catch (error) {
-      console.error("Invalid token", error);
-    }
-  }
+  // if (token) {
+  //   try {
+  //     const decodedToken = jwtDecode(token);
+  //     role = decodedToken.role; // Extract the role from the decoded token
+  //     console.log("Decoded Role:", role); // Debugging log
+  //   } catch (error) {
+  //     console.error("Invalid token", error);
+  //   }
+  // }
 
   return (
     <Router>
@@ -76,9 +76,9 @@ const App = () => {
             /> */}
             {/* Additional Routes */}
             <Route path="/issue-form" element={<Forms />} />
-            <Route path="/chat-app" element={<ChatMessenger />} /> */}
+            <Route path="/chat-app" element={<ChatMessenger />} />
             {/* Fallback Route */}
-            <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
+            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </div>
       </div>

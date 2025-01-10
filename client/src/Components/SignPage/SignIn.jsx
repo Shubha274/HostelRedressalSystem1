@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
 const SignIn = () => {
   const [userId, setUserId] = useState("");
@@ -14,46 +14,59 @@ const SignIn = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
 
-    if (!userId.trim() || !password.trim()) {
-      setError("Please enter both your userId and password.");
-      return;
-    }
+  //   const trimmedUserId = userId.trim();
+  //   const trimmedPassword = password.trim();
 
-    setIsLoading(true);
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/api/auth/login`, // Use environment variable
-        { userId: userId.trim(), password: password.trim() }
-      );
+  //   if (!trimmedUserId || !trimmedPassword) {
+  //     setError("Please enter both your userId and password.");
+  //     return;
+  //   }
 
-      const { token } = response.data;
-      const decodedToken = jwtDecode(token);
-      const { role } = decodedToken;
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axios.post("http://localhost:8080/api/login", {
+  //       userId: trimmedUserId,
+  //       password: trimmedPassword,
+  //     });
 
-      switch (role) {
-        case "student":
-          navigate("/student-dashboard");
-          break;
-        case "warden":
-          navigate("/warden-dashboard");
-          break;
-        case "admin":
-          navigate("/admin-dashboard");
-          break;
-        default:
-          setError("Unknown role.");
-          break;
-      }
-    } catch (error) {
-      setError(error.response?.data?.message || "Login failed.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     const { token } = response.data;
+
+  //     // Store the token in localStorage
+  //     localStorage.setItem("token", token);
+
+  //     // Decode the token to get the user role
+  //     const decodedToken = jwtDecode(token);
+  //     const { role } = decodedToken; // Get role from decoded token
+
+  //     // Redirect based on the role in the token
+  //     switch (role) {
+  //       case "student":
+  //         navigate("/student-dashboard");
+  //         break;
+  //       case "warden":
+  //         navigate("/warden-dashboard");
+  //         break;
+  //       case "admin":
+  //         navigate("/admin-dashboard");
+  //         break;
+  //       default:
+  //         setError("Unknown role.");
+  //         break;
+  //     }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       setError(error.response.data?.message || "Login failed.");
+  //     } else {
+  //       setError("An unexpected error occurred.");
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="login-page">
@@ -66,7 +79,11 @@ const SignIn = () => {
       <main className="form-section">
         <form onSubmit={handleLogin} className="login-form">
           <h2>Login</h2>
-          {error && <p className="error-message">{error}</p>}
+          {error && (
+            <p className="error-message" aria-live="polite">
+              {error}
+            </p>
+          )}
 
           <fieldset>
             <legend>Enter your credentials</legend>
@@ -87,7 +104,9 @@ const SignIn = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder={
+                showPassword ? "Your password (visible)" : "Enter your password"
+              }
               required
               autoComplete="current-password"
             />
@@ -98,7 +117,7 @@ const SignIn = () => {
               className="toggle-password-btn"
               aria-label="Toggle password visibility"
             >
-              {showPassword ? "Hide" : "Show"}
+              {showPassword ? "Hide Password" : "Show Password"}
             </button>
           </fieldset>
 
