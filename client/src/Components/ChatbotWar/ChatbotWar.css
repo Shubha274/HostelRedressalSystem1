@@ -1,7 +1,7 @@
 .chatbot-war-container {
   position: fixed;
   bottom: 20px;
-  right: 100px;
+  right: 20px;
   z-index: 1000;
   color: black;
 }
@@ -92,7 +92,8 @@
 
 /* Pop-up animation */
 @keyframes pop-up {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {

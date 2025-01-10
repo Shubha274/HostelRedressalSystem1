@@ -2,11 +2,12 @@ import React from "react";
 import "./WardenDboard.css";
 
 import ChatbotWar from "../ChatbotWar/ChatbotWar";
-
+import Chart from "../Chartss/Chart";
 import Navbar from "../NavBar/Navbar";
 
 import Sidebar from "../Sidebar/Sidebar";
 import { jwtDecode } from "jwt-decode";
+import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 const token = localStorage.getItem("token");
 let role = null;
 
@@ -26,6 +27,7 @@ const WardenDboard = () => {
       <Navbar />
       <Sidebar />
       <ChatbotWar />
+      <Chart />
       <pre>hello i am the warden of hostel sangam</pre>
       {/* {token && <Sidebar role={role} />} */}
     </div>

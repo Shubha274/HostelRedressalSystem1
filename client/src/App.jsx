@@ -38,7 +38,7 @@ const App = () => {
         <div className="main-content">
           <Routes>
             {/* Route for Login */}
-            {/* <Route
+            <Route
               path="/"
               element={
                 token ? (
@@ -47,7 +47,7 @@ const App = () => {
                   <Navigate to="/login" />
                 )
               }
-            /> */}
+            />
             {/* Default Route*/}
             {/* <Route
               path="/"
@@ -59,9 +59,9 @@ const App = () => {
                 )
               }
             /> */}
-            {/* <Route path="/login" element={<SignIn />} /> */}
+            <Route path="/login" element={<SignIn />} /> */}
             {/* Student Dashboard */}
-            {/* <Route
+            <Route
               path="/student-dashboard"
               element={
                 role === "student" ? (
@@ -70,30 +70,29 @@ const App = () => {
                   <Navigate to="/login" />
                 )
               }
-            /> */}
-
+            />
             {/* Warden Dashboard */}
-            {/* <Route
+            <Route
               path="/warden-dashboard"
               element={
                 role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
-              } */}
-            {/* /> */}
-            {/* Admin Dashboard */}
-            {/* <Route
+              }
+            />
+            {/* Admin Dashboard*/}
+            <Route
               path="/admin-dashboard"
               element={
                 role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
-              } */}
-            {/* /> */}
+              }
+            />
             {/* Additional Routes */}
-            {/* <Route path="/issue-form" element={<Forms />} />
+            <Route path="/issue-form" element={<Forms />} />
             <Route path="/chat-app" element={<ChatMessenger />} />
-            <Route path="/dashboard" element={<Dashboards />} /> */}
-            <Route path="/chart" element={<Chart />} /> 
-            {/* <Route path="/student-dashboard" element={<StudentDboard />} /> */}
-            {/* Fallback Route */}
-            {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
+            <Route path="/dashboard" element={<Dashboards />} />
+            <Route path="/chart" element={<Chart />} />
+            <Route path="/student-dashboard" element={<StudentDboard />} />
+            {/* Fallback Route*/}
+            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </div>
       </div>
