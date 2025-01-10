@@ -51,7 +51,7 @@ const App = () => {
   }
 
   return (
-  <Router>
+    <><><Router>
       <div id="links">
         <Link to="/">Home</Link>
         <Link to="/blog">Blog</Link>
@@ -61,13 +61,13 @@ const App = () => {
         <div className="main-content">
           <Routes>
             {/* Route for Login */}
-            {/* <Route
+            <Route
               path="/"
               element={token ? (
                 <Navigate to={`/${role}-dashboard`} />
-              ) : ( */}
-                {/* <Navigate to="/login" />
-              )} /> */}
+              ) : (
+                <Navigate to="/login" />
+              )} />
             {/* Default Route*/}
             {/* <Route
 path="/"
@@ -79,39 +79,40 @@ token && role ? (
 )
 }
 /> */}
-            {/* <Route path="/login" element={<SignIn />} /> */}
+            <Route path="/login" element={<SignIn />} /> */
             {/* Student Dashboard */}
-            {/* <Route
+            <Route
               path="/student-dashboard"
               element={role === "student" ? (
                 <StudentDboard />
               ) : (
                 <Navigate to="/login" />
-              )} /> */}
+              )} />
             {/* Warden Dashboard */}
-            {/* <Route
+            <Route
               path="/warden-dashboard"
-              element={role === "warden" ? <WardenDboard /> : <Navigate to="/login" />} /> */}
+              element={role === "warden" ? <WardenDboard /> : <Navigate to="/login" />} />
             {/* Admin Dashboard*/}
-            {/* <Route
+            <Route
               path="/admin-dashboard"
-              element={role === "admin" ? <AdminDboard /> : <Navigate to="/login" />} /> */}
+              element={role === "admin" ? <AdminDboard /> : <Navigate to="/login" />} />
             {/* Additional Routes */}
-            {/* <Route path="/issue-form" element={<Forms />} />
+            <Route path="/issue-form" element={<Forms />} />
             <Route path="/chat-app" element={<ChatMessenger />} />
             <Route path="/dashboard" element={<Dashboards />} />
             <Route path="/chart" element={<Chart />} />
             <Route path="/student-dashboard" element={<StudentDboard />} />
-            <Route path="/home" element={<HomePage />} /> */}
+            <Route path="/home" element={<HomePage />} />
             <Route path="/blog" element={<BlogPage />} />
-            {/* <Route path="/contact" element={<ContactPage />} /> */}
+            <Route path="/contact" element={<ContactPage />} />
             {/* Fallback Route*/}
-            {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
+            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </div>
       </div>
     </Router>
-    
+    <p id="transcript">Transcript: {transcript}</p></>
+    <button onClick={SpeechRecognition.startListening}>Start</button></>
   );
 };
 
