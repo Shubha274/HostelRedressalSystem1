@@ -59,7 +59,7 @@ const App = () => {
                 )
               }
             /> */}
-            <Route path="/login" element={<SignIn />} /> */}
+            <Route path="/login" element={<SignIn />} /> */
             {/* Student Dashboard */}
             <Route
               path="/student-dashboard"
