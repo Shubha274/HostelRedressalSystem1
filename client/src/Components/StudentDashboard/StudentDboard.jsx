@@ -16,7 +16,7 @@ const StudentDboard = () => {
       <p>i am shubha</p>
 
       <Sidebar />
-
+      <Table />
       <ChatbotAdm />
     </>
   );
