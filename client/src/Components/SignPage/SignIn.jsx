@@ -117,7 +117,7 @@ const SignIn = () => {
 
             <button
               type="button"
-              onClick={handleLogin}
+              onClick={() => setShowPassword(!showPassword)}
               className="toggle-password-btn"
               aria-label="Toggle password visibility"
             >
