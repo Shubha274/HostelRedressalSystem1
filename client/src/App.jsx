@@ -17,7 +17,6 @@ import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 import Dashboards from "./Components/Dasboard/Dashboards";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Chart from "./Components/Chartss/Chart";
-
 const App = () => {
   const token = localStorage.getItem("token");
   let role = null;
@@ -46,8 +45,8 @@ const App = () => {
                 ) : (
                   <Navigate to="/login" />
                 )
-              }
-            /> */}
+              } */}
+            {/* /> */}
             {/* Default Route*/}
             {/* <Route
               path="/"
@@ -90,7 +89,7 @@ const App = () => {
             {/* <Route path="/issue-form" element={<Forms />} />
             <Route path="/chat-app" element={<ChatMessenger />} />
             <Route path="/dashboard" element={<Dashboards />} /> */}
-           <Route path="/chart" element={<Chart />} />
+            <Route path="/chart" element={<Chart />} /> 
             {/* <Route path="/student-dashboard" element={<StudentDboard />} /> */}
             {/* Fallback Route */}
             {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
