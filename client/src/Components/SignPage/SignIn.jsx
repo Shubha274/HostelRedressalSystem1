@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode
+import { jwtDecode } from "jwt-decode";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,25 +15,29 @@ const SignIn = () => {
     userId: "",
     password: "",
   });
+
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
-    const trimmedUserId = userId.trim();
-    const trimmedPassword = password.trim();
+    // const trimmedUserId = inputs.userId.trim();
+    // const trimmedPassword = inputs.password.trim();
 
-    if (!trimmedUserId || !trimmedPassword) {
+    if (!inputs.userId || !inputs.password) {
       setError("Please enter both your userId and password.");
       return;
     }
 
     setIsLoading(true);
     try {
-      const response = await axios.post("http://localhost:8080/api/login");
-
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        inputs
+      );
       const { token } = response.data;
 
       // Store the token in localStorage
@@ -41,7 +45,7 @@ const SignIn = () => {
 
       // Decode the token to get the user role
       const decodedToken = jwtDecode(token);
-      const { role } = decodedToken; // Get role from decoded token
+      const { role } = decodedToken;
 
       // Redirect based on the role in the token
       switch (role) {
@@ -104,7 +108,7 @@ const SignIn = () => {
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              onClick={handleChange}
+              onChange={handleChange}
               placeholder={
                 showPassword ? "Your password (visible)" : "Enter your password"
               }
