@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./StudentDboard.css";
+import Table from "../Tables/Table";
 import "../IssueForm/Forms";
 import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 import Navbar from "../NavBar/Navbar";
