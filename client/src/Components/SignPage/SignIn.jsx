@@ -107,7 +107,7 @@ const SignIn = () => {
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              onChange={handleChange}
+              onClick={() => setShowPassword(!showPassword)}
               placeholder={
                 showPassword ? "Your password (visible)" : "Enter your password"
               }
