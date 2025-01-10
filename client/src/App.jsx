@@ -18,6 +18,8 @@ import Dashboards from "./Components/Dasboard/Dashboards";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Chart from "./Components/Chartss/Chart";
 import Blog from "./Components/Voice/Blog";
+import Contact from "./Components/Voice/Contact";
+import Home from "./Components/Voice/Home";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -92,6 +94,8 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboards />} />
             <Route path="/chart" element={<Chart />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/student-dashboard" element={<StudentDboard />} />
             {/* Fallback Route*/}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
