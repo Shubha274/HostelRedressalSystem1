@@ -43,8 +43,33 @@ const SignIn = () => {
       localStorage.setItem("token", token);
 
       // Decode the token to get the user role
-      // const decodedToken = jwtDecode(token);
-      // const { role } = decodedToken;
+      const decodedToken = jwtDecode(token);
+      const { role } = decodedToken;
+      switch (role) {
+        case "student":
+          navigate("/student-dashboard");
+          break;
+        case "warden":
+          navigate("/warden-dashboard");
+          break;
+        case "admin":
+          navigate("/admin-dashboard");
+          break;
+        default:
+          setError("Unknown role.");
+          break;
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data?.message || "Login failed.");
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
       // navigate("/dashboard");
     } catch (error) {
       if (error.response) {
