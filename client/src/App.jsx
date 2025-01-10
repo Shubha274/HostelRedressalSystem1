@@ -7,7 +7,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import jwtDecode from "jwt-decode"; // Correct import
+import { jwtDecode } from "jwt-decode"; // Correct import
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
@@ -16,18 +16,18 @@ import Forms from "./Components/IssueForm/Forms";
 import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 
 const App = () => {
-  // const token = localStorage.getItem("token");
-  // let role = null;
+  const token = localStorage.getItem("token");
+  let role = null;
 
-  // if (token) {
-  //   try {
-  //     const decodedToken = jwtDecode(token);
-  //     role = decodedToken.role; // Extract the role from the decoded token
-  //     console.log("Decoded Role:", role); // Debugging log
-  //   } catch (error) {
-  //     console.error("Invalid token", error);
-  //   }
-  // }
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      role = decodedToken.role; // Extract the role from the decoded token
+      console.log("Decoded Role:", role); // Debugging log
+    } catch (error) {
+      console.error("Invalid token", error);
+    }
+  }
 
   return (
     <Router>
@@ -36,7 +36,7 @@ const App = () => {
           <Routes>
             {/* Route for Login */}
             <Route path="/login" element={<SignIn />} />
-            {/* Default Route
+            {/* Default Route*/}
             <Route
               path="/"
               element={
@@ -49,7 +49,7 @@ const App = () => {
             />
 
             {/* Student Dashboard */}
-            {/* <Route
+            <Route
               path="/student-dashboard"
               element={
                 role === "student" ? (
@@ -61,19 +61,19 @@ const App = () => {
             />
 
             {/* Warden Dashboard */}
-            {/* <Route
+            <Route
               path="/warden-dashboard"
               element={
                 role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
               }
-            /> */}
+            />
             {/* Admin Dashboard */}
-            {/* <Route
+            <Route
               path="/admin-dashboard"
               element={
                 role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
               }
-            /> */}
+            />
             {/* Additional Routes */}
             <Route path="/issue-form" element={<Forms />} />
             <Route path="/chat-app" element={<ChatMessenger />} />

@@ -84,7 +84,7 @@
 // export default Login;
 import React, { useState } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -93,8 +93,8 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 const Login = ({ setRole, setUserId }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -107,14 +107,17 @@ const Login = ({ setRole, setUserId }) => {
       return;
     }
 
-    setIsLoading(true);
+    // setIsLoading(true);
 
     try {
       // Send both userId (username) and password to the backend
-      const response = await axios.post("http://localhost:8080/api/", {
-        userId: username, // username is used as userId in the DB
-        password, // send the password as well
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          userId: username, // username is used as userId in the DB
+          password, // send the password as well
+        }
+      );
 
       const { token, role } = response.data;
 
@@ -162,8 +165,9 @@ const Login = ({ setRole, setUserId }) => {
           <input
             id="username"
             type="text"
+            name="username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleChange}
             placeholder="Enter your username"
             required
           />
@@ -171,8 +175,9 @@ const Login = ({ setRole, setUserId }) => {
           <input
             id="password"
             type={showPassword ? "text" : "password"}
+            name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(onChange = { handleChange })}
             placeholder="Enter your password"
             required
           />

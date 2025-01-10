@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-
+const INITIAL_STATE = { user: null, isFetching: false, error: false };
 // Create the Auth Context
-const AuthContext = createContext();
+const AuthContext = createContext(INITIAL_STATE);
 
 // Auth Provider Component
-export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+export const AuthProvider = () => {
+  const [state, dispatch] = useReducer(null);
   const [role, setRole] = useState(null);
 
   // Load token from localStorage on initial render

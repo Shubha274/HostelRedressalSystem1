@@ -7,66 +7,70 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
 const SignIn = () => {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [inputs, setInputs] = useState({
+    userId: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
+    const trimmedUserId = userId.trim();
+    const trimmedPassword = password.trim();
 
-  //   const trimmedUserId = userId.trim();
-  //   const trimmedPassword = password.trim();
+    if (!trimmedUserId || !trimmedPassword) {
+      setError("Please enter both your userId and password.");
+      return;
+    }
 
-  //   if (!trimmedUserId || !trimmedPassword) {
-  //     setError("Please enter both your userId and password.");
-  //     return;
-  //   }
+    setIsLoading(true);
+    try {
+      const response = await axios.post("http://localhost:8080/api/login", {
+        userId: trimmedUserId,
+        password: trimmedPassword,
+      });
 
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await axios.post("http://localhost:8080/api/login", {
-  //       userId: trimmedUserId,
-  //       password: trimmedPassword,
-  //     });
+      const { token } = response.data;
 
-  //     const { token } = response.data;
+      // Store the token in localStorage
+      localStorage.setItem("token", token);
 
-  //     // Store the token in localStorage
-  //     localStorage.setItem("token", token);
+      // Decode the token to get the user role
+      const decodedToken = jwtDecode(token);
+      const { role } = decodedToken; // Get role from decoded token
 
-  //     // Decode the token to get the user role
-  //     const decodedToken = jwtDecode(token);
-  //     const { role } = decodedToken; // Get role from decoded token
-
-  //     // Redirect based on the role in the token
-  //     switch (role) {
-  //       case "student":
-  //         navigate("/student-dashboard");
-  //         break;
-  //       case "warden":
-  //         navigate("/warden-dashboard");
-  //         break;
-  //       case "admin":
-  //         navigate("/admin-dashboard");
-  //         break;
-  //       default:
-  //         setError("Unknown role.");
-  //         break;
-  //     }
-  //   } catch (error) {
-  //     if (error.response) {
-  //       setError(error.response.data?.message || "Login failed.");
-  //     } else {
-  //       setError("An unexpected error occurred.");
-  //     }
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      // Redirect based on the role in the token
+      switch (role) {
+        case "student":
+          navigate("/student-dashboard");
+          break;
+        case "warden":
+          navigate("/warden-dashboard");
+          break;
+        case "admin":
+          navigate("/admin-dashboard");
+          break;
+        default:
+          setError("Unknown role.");
+          break;
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data?.message || "Login failed.");
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="login-page">
@@ -91,8 +95,8 @@ const SignIn = () => {
             <input
               id="userId"
               type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
+              name="userId"
+              onChange={handleChange}
               placeholder="Enter your university ID"
               required
               autoComplete="username"
@@ -101,9 +105,9 @@ const SignIn = () => {
             <label htmlFor="password">Password</label>
             <input
               id="password"
+              name="password"
               type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               placeholder={
                 showPassword ? "Your password (visible)" : "Enter your password"
               }
@@ -113,7 +117,7 @@ const SignIn = () => {
 
             <button
               type="button"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={handleLogin}
               className="toggle-password-btn"
               aria-label="Toggle password visibility"
             >
