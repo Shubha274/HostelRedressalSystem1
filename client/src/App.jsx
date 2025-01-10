@@ -37,7 +37,16 @@ const App = () => {
         <div className="main-content">
           <Routes>
             {/* Route for Login */}
-
+            {/* <Route
+              path="/login"
+              element={
+                token ? (
+                  <Navigate to={`/${role}-dashboard`} />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            /> */}
             {/* Default Route*/}
             {/* <Route
               path="/"
@@ -51,7 +60,7 @@ const App = () => {
             /> */}
             <Route path="/login" element={<SignIn />} />
             {/* Student Dashboard */}
-            {/* <Route
+            <Route
               path="/student-dashboard"
               element={
                 role === "student" ? (
@@ -60,7 +69,7 @@ const App = () => {
                   <Navigate to="/login" />
                 )
               }
-            /> */}
+            />
 
             {/* Warden Dashboard */}
             <Route
@@ -80,7 +89,7 @@ const App = () => {
             <Route path="/issue-form" element={<Forms />} />
             <Route path="/chat-app" element={<ChatMessenger />} />
             <Route path="/dashboard" element={<Dashboards />} />
-            <Route path="/student-dashboard" element={<StudentDboard />} />
+            {/* <Route path="/student-dashboard" element={<StudentDboard />} /> */}
             {/* Fallback Route */}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
