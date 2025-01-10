@@ -15,6 +15,7 @@ import AdminDboard from "./Components/AdminDashboard/AdminDboard";
 import Forms from "./Components/IssueForm/Forms";
 import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 import Dashboards from "./Components/Dasboard/Dashboards";
+import Sidebar from "./Components/Sidebar/Sidebar";
 
 const App = () => {
   const token = localStorage.getItem("token");

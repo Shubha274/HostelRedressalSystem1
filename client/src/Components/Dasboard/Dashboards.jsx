@@ -47,6 +47,7 @@ const Dashboards = () => {
   return (
     <div>
       <Navbar />
+      <Sidebar />
     </div>
   ); // No UI needed, as it redirects based on the role
 };

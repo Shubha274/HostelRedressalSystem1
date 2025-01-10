@@ -21,10 +21,10 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const handleGoBack = () => {
-    // This will take the user to the previous page in history
-    navigate(-1);
-  };
+  // const handleGoBack = () => {
+  //   // This will take the user to the previous page in history
+  //   navigate(-1);
+  // };
 
   return (
     <nav className="navbar">
