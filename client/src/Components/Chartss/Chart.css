@@ -1,9 +1,22 @@
-.pp
+.chart
 {
     display:flex;
     justify-content:center;
-    color: black;
+    /* color: black; */
     /* background-color: red; */
     width: 800px; 
-    height: 800px;
+    height: 450px;
+    margin-top: 90px;
 }
+.button {
+    width:70px;
+    margin-left: 380px;
+  }
+  button
+  {
+    color: rgb(255, 255, 255);
+    background-color: #010305;
+  }
+  button:hover {
+    background-color: #626a71;
+  }

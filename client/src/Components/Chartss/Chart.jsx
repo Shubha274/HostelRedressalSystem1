@@ -90,9 +90,13 @@ const handleIncrement = () => {
   }
 };
   return (
-    <div className="pp">
-       <button onClick={handleIncrement}></button>
-       <Bar data={data} options={option}/>
+    <div>  
+       <div className="chart">
+         <Bar data={data} options={option}/>    
+       </div>  
+        <div className="button">
+          <button onClick={handleIncrement}>Solved</button>
+       </div>
      </div>
   )
 }
