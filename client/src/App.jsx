@@ -54,7 +54,7 @@ const App = () => {
     <><><Router>
       <div id="links">
         <Link to="/">Home</Link>
-        <Link to="/blog">Blog</Link>
+        <Link to="/Components/Voice/blog">Blog</Link>
         <Link to="/contact">Contact</Link>
       </div>
       <div className="app">
