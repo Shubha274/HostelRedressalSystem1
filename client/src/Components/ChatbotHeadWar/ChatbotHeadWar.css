@@ -1,0 +1,118 @@
+/* Unique styles for ChatbotHeadWar */
+.chatbot-head-container {
+  position: fixed;
+  bottom: 20px;
+  right: 10px;
+  z-index: 1000;
+  color: black;
+}
+
+.chat-head-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  animation: pop-up 1s infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.chat-head-icon img {
+  width: 30px;
+  height: 30px;
+}
+
+.chat-head-icon.open {
+  transform: scale(1.2);
+}
+
+.chat-head-window {
+  width: 300px;
+  height: 400px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-head-header {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.chat-head-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+.chat-head-message {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.chat-head-message.bot {
+  background-color: #60adc6;
+  align-self: flex-start;
+}
+
+.chat-head-message.user {
+  background-color: #6193cd;
+  color: white;
+  align-self: flex-end;
+}
+
+.chat-head-input-container {
+  display: flex;
+  border-top: 1px solid #ccc;
+  padding: 5px;
+}
+
+.chat-head-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.send-head-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-left: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-head-button:hover {
+  background-color: #0056b3;
+}
+
+/* Pop-up animation */
+@keyframes pop-up {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
