@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import StudentDashboard from "./Components/StudentDashboard/StudentDashboard";
+import RoleStatusCard from "./Components/Card/RoleStatusCard";
+
 
 function App() {
   return (
     <>
-      <StudentDashboard />
+      < RoleStatusCard />
     </>
   );
 }
