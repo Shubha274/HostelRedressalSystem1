@@ -28,7 +28,7 @@ const WardenDboard = () => {
       <Navbar />
       <Sidebar />
       <ChatbotWar />
-      {/* <WardenRole /> */}
+      <WardenRole />
       <Chart />
       <Table />
 
