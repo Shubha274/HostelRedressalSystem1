@@ -1,6 +1,4 @@
-// React App for BV Hostel Portal
-
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,9 +12,6 @@ import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
 import AdminDboard from "./Components/AdminDashboard/AdminDboard";
 import Forms from "./Components/IssueForm/Forms";
 import ChatMessenger from "./Components/ChatApp/ChatMessenger";
-import Dashboards from "./Components/Dasboard/Dashboards";
-import Sidebar from "./Components/Sidebar/Sidebar";
-import Chart from "./Components/Chartss/Chart";
 
 const App = () => {
   const token = localStorage.getItem("token");
@@ -25,8 +20,12 @@ const App = () => {
   if (token) {
     try {
       const decodedToken = jwtDecode(token);
-      role = decodedToken.role; // Extract the role from the decoded token
-      console.log("Decoded Role:", role); // Debugging log
+      const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+      if (isTokenExpired) {
+        localStorage.removeItem("token");
+      } else {
+        role = decodedToken.role;
+      }
     } catch (error) {
       console.error("Invalid token", error);
     }
@@ -35,66 +34,75 @@ const App = () => {
   return (
     <Router>
       <div className="app">
-        <div className="main-content">
-          <Routes>
-            {/* Route for Login */}
-            <Route
-              path="/"
-              element={
-                token ? (
-                  <Navigate to={`/${role}-dashboard`} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            {/* Default Route*/}
-            {/* <Route
-              path="/"
-              element={
-                token && role ? (
-                  <Navigate to="/student-dashboard" />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            /> */}
-            <Route path="/login" element={<SignIn />} /> */}
-            {/* Student Dashboard */}
-            <Route
-              path="/student-dashboard"
-              element={
+        <Routes>
+          {/* Login Route */}
+          <Route path="/login" element={<SignIn />} />
+
+          {/* Redirect based on token and role */}
+          <Route
+            path="/"
+            element={
+              token ? (
                 role === "student" ? (
-                  <StudentDboard />
+                  <Navigate to="/student-dashboard" />
+                ) : role === "warden" ? (
+                  <Navigate to="/warden-dashboard" />
+                ) : role === "admin" ? (
+                  <Navigate to="/admin-dashboard" />
                 ) : (
                   <Navigate to="/login" />
                 )
-              }
-            />
-            {/* Warden Dashboard */}
-            <Route
-              path="/warden-dashboard"
-              element={
-                role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
-              }
-            />
-            {/* Admin Dashboard*/}
-            <Route
-              path="/admin-dashboard"
-              element={
-                role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
-              }
-            />
-            {/* Additional Routes */}
-            <Route path="/issue-form" element={<Forms />} />
-            <Route path="/chat-app" element={<ChatMessenger />} />
-            <Route path="/dashboard" element={<Dashboards />} />
-            <Route path="/chart" element={<Chart />} />
-            <Route path="/student-dashboard" element={<StudentDboard />} />
-            {/* Fallback Route*/}
-            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-          </Routes>
-        </div>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          {/* Role-Specific Routes */}
+          <Route
+            path="/student-dashboard"
+            element={
+              token && role === "student" ? (
+                <StudentDboard />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/warden-dashboard"
+            element={
+              token && role === "warden" ? (
+                <WardenDboard />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/admin-dashboard"
+            element={
+              token && role === "admin" ? (
+                <AdminDboard />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          {/* Additional Routes */}
+          <Route
+            path="/issue-form"
+            element={token ? <Forms /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/chat-app"
+            element={token ? <ChatMessenger /> : <Navigate to="/login" />}
+          />
+
+          {/* Fallback Route */}
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        </Routes>
       </div>
     </Router>
   );

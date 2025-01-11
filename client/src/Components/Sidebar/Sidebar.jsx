@@ -42,7 +42,7 @@ const Sidebar = () => {
             <FontAwesomeIcon icon={faEdit} className="icon" />
             <span>Issue Form</span>
           </li>
-          {/* // )} */}
+          {/* )} */}
           <li onClick={() => handleNavigation("/chat-app")}>
             <FontAwesomeIcon icon={faComments} className="icon" />
             <span>Chat App</span>
