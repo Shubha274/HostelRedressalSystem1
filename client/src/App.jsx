@@ -1,6 +1,6 @@
 // React App for BV Hostel Portal
 
-import React from "react";
+import React, { useCallback, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -37,15 +37,16 @@ const App = () => {
     }
   }
 
-  // Fallback for unsupported browsers (SpeechRecognition handling)
-  const { browserSupportsSpeechRecognition } = useSpeechRecognition();
-  if (!browserSupportsSpeechRecognition) {
-    console.warn("Browser does not support speech recognition.");
+const commands=[
+  {
+    command:["Go to *","Open"],
+    callback:(redirectPage)=>setRedirectUrl(redirectPage),
   }
-else{
-  console.warn("Browsersupport speech recognition.");
-}
-  return (
+]
+const {transcript}=useSpeechRecognition({commands});
+const [redirectUrl,setRedirectUrl]=useState("");
+
+return (
     <Router>
       <div id="links">
         <Link to="/">Home</Link>
@@ -114,6 +115,7 @@ else{
         </div>
       </div>
     </Router>
+    // <p id="transcript">Transcript:{transcript}</p>
   );
 };
 
