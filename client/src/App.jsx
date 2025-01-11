@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
   Navigate,
+  Link,
 } from "react-router-dom";
 import "regenerator-runtime/runtime";
 
@@ -46,6 +47,11 @@ else{
 }
   return (
     <Router>
+      <div id="links">
+        <Link to="/">Home</Link>
+        <Link to="/blog">Blog</Link>
+        <Link to="/contact">Contact</Link>
+      </div>
       <div className="app">
         <div className="main-content">
           <Routes>
