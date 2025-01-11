@@ -37,13 +37,13 @@ const App = () => {
     }
   }
 
-// const commands=[
-//   {
-//     command:["Go to *","Open"],
-//     callback:(redirectPage)=>setRedirectUrl(redirectPage),
-//   }
-// ]
-// const {transcript}=useSpeechRecognition({commands});
+const commands=[
+  {
+    command:["Go to *","Open"],
+    callback:(redirectPage)=>setRedirectUrl(redirectPage),
+  }
+]
+const {transcript}=useSpeechRecognition({commands});
 // const [redirectUrl,setRedirectUrl]=useState("");
 // const pages=["home","blog","contact"];
 // const urls={
@@ -126,7 +126,8 @@ return (
   </Router><p id="transcript">Transcript:{transcript}</p></>
   <button onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-US' })}>
   Start
-</button></>
+</button>
+\</>
   );
 };
 
