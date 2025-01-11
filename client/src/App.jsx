@@ -45,7 +45,27 @@ const commands=[
 ]
 const {transcript}=useSpeechRecognition({commands});
 const [redirectUrl,setRedirectUrl]=useState("");
-
+const pages=["home","blog","contact"];
+const urls={
+  home:"/",
+  blog:"./Components/Voice/Blog",
+  contact:"./Components/Voice/Contact",
+}
+if(!SpeechRecognition.browserSupportsSpeechRecognition)
+{
+   return null;
+}
+let redirect="";
+if(redirectUrl)
+{
+  if(pages.includes(redirectUrl))
+  {
+    redirect=<Redirect to={urls[redirectUrl]}/>
+  }
+  else{
+    redirect=<p>Could not find page : {redirectUrl}</p>;
+  }
+}
 return (
     <><><Router>
     <div id="links">
@@ -97,6 +117,7 @@ return (
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/home" element={<Home />} />
+          {redirect}
           {/* Fallback Route */}
           {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
         </Routes>
