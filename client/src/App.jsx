@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
+  redirect,
   Link,
 } from "react-router-dom";
 import "regenerator-runtime/runtime";
