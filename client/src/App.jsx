@@ -7,6 +7,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import "regenerator-runtime/runtime";
 
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import SignIn from "./Components/SignPage/SignIn";
