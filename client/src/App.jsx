@@ -102,7 +102,10 @@ return (
         </Routes>
       </div>
     </div>
-  </Router><p id="transcript">Transcript:{transcript}</p></><button onClick={SpeechRecognition.startListening}>Start</button></>
+  </Router><p id="transcript">Transcript:{transcript}</p></>
+  <button onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-US' })}>
+  Start
+</button></>
   );
 };
 
