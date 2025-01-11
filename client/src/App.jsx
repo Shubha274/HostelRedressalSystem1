@@ -1,11 +1,14 @@
 import { useEffect } from "react";
-import RoleStatusCard from "./Components/Card/RoleStatusCard";
+
+import StudentRoleCard from "./Components/StudentCard/StudentRoleCard";
+import WardenRoleCard from "./Components/WardebCard/WardenRoleCard";
 
 
 function App() {
   return (
     <>
-      < RoleStatusCard />
+     <StudentRoleCard />
+     <WardenRoleCard />
     </>
   );
 }
