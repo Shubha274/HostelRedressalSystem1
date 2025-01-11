@@ -1,17 +1,14 @@
 // React App for BV Hostel Portal
 
-import React, { useEffect,useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-  Link,
-  redirect,
 } from "react-router-dom";
 
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { jwtDecode } from "jwt-decode"; // Correct import
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
@@ -19,7 +16,6 @@ import AdminDboard from "./Components/AdminDashboard/AdminDboard";
 import Forms from "./Components/IssueForm/Forms";
 import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 import Dashboards from "./Components/Dasboard/Dashboards";
-import Sidebar from "./Components/Sidebar/Sidebar";
 import Chart from "./Components/Chartss/Chart";
 import Blog from "./Components/Voice/Blog";
 import Contact from "./Components/Voice/Contact";
@@ -31,12 +27,18 @@ const App = () => {
 
   if (token) {
     try {
-      const decodedToken = jwtDecode(token);
+      const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT token
       role = decodedToken.role; // Extract the role from the decoded token
       console.log("Decoded Role:", role); // Debugging log
     } catch (error) {
       console.error("Invalid token", error);
     }
+  }
+
+  // Fallback for unsupported browsers (SpeechRecognition handling)
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition();
+  if (!browserSupportsSpeechRecognition) {
+    console.warn("Browser does not support speech recognition.");
   }
 
   return (
@@ -55,18 +57,7 @@ const App = () => {
                 )
               }
             />
-            {/* Default Route*/}
-            {/* <Route
-              path="/"
-              element={
-                token && role ? (
-                  <Navigate to="/student-dashboard" />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            /> */}
-            <Route path="/login" element={<SignIn />} /> */
+            <Route path="/login" element={<SignIn />} />
             {/* Student Dashboard */}
             <Route
               path="/student-dashboard"
@@ -82,14 +73,22 @@ const App = () => {
             <Route
               path="/warden-dashboard"
               element={
-                role === "warden" ? <WardenDboard /> : <Navigate to="/login" />
+                role === "warden" ? (
+                  <WardenDboard />
+                ) : (
+                  <Navigate to="/login" />
+                )
               }
             />
-            {/* Admin Dashboard*/}
+            {/* Admin Dashboard */}
             <Route
               path="/admin-dashboard"
               element={
-                role === "admin" ? <AdminDboard /> : <Navigate to="/login" />
+                role === "admin" ? (
+                  <AdminDboard />
+                ) : (
+                  <Navigate to="/login" />
+                )
               }
             />
             {/* Additional Routes */}
@@ -99,8 +98,8 @@ const App = () => {
             <Route path="/chart" element={<Chart />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/home" element={<Home />}/>
-            {/* Fallback Route*/}
+            <Route path="/home" element={<Home />} />
+            {/* Fallback Route */}
             <Route path="*" element={<h1>404 - Page Not Found</h1>} />
           </Routes>
         </div>
