@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-// import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
@@ -36,13 +36,13 @@ const App = () => {
   }
 
   // Fallback for unsupported browsers (SpeechRecognition handling)
-//   const { browserSupportsSpeechRecognition } = useSpeechRecognition();
-//   if (!browserSupportsSpeechRecognition) {
-//     console.warn("Browser does not support speech recognition.");
-//   }
-// else{
-//   console.warn("Browsersupport speech recognition.");
-// }
+  const { browserSupportsSpeechRecognition } = useSpeechRecognition();
+  if (!browserSupportsSpeechRecognition) {
+    console.warn("Browser does not support speech recognition.");
+  }
+else{
+  console.warn("Browsersupport speech recognition.");
+}
   return (
     <Router>
       <div className="app">
