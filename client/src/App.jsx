@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "regenerator-runtime/runtime";
 
-// Importing components
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
 import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
@@ -35,83 +35,77 @@ const App = () => {
     }
   }
 
-  // States
-  const [transcript, setTranscript] = useState("");
-  const [redirectUrl, setRedirectUrl] = useState("");
-
-  // SpeechRecognition API setup
-  useEffect(() => {
-    const recognition = new window.SpeechRecognition();
-    recognition.continuous = true;
-    recognition.lang = "en-US";
-
-    recognition.onresult = (event) => {
-      const newTranscript = Array.from(event.results)
-        .map((result) => result[0].transcript)
-        .join("");
-      setTranscript(newTranscript);
-
-      // Redirect logic based on transcript
-      if (newTranscript.toLowerCase().includes("go to home")) {
-        setRedirectUrl("/home");
-      } else if (newTranscript.toLowerCase().includes("go to blog")) {
-        setRedirectUrl("/blog");
-      } else if (newTranscript.toLowerCase().includes("go to contact")) {
-        setRedirectUrl("/contact");
-      }
-    };
-
-    recognition.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
-    };
-
-    recognition.onend = () => {
-      console.log("Speech recognition ended. Restarting...");
-      recognition.start(); // Restart listening automatically
-    };
-
-    recognition.start(); // Start listening
-    console.log("Speech recognition started");
-
-    // Cleanup on component unmount
-    return () => recognition.stop();
-  }, []);
-
-  // Redirect if redirectUrl is set
-  if (redirectUrl) {
-    return <Navigate to={redirectUrl} />;
+const commands=[
+  {
+    command:["Go to *","Open"],
+    callback:(redirectPage)=>setRedirectUrl(redirectPage),
   }
+]
+const {transcript}=useSpeechRecognition({commands});
+const [redirectUrl,setRedirectUrl]=useState("");
 
-  return (
-    <>
-      <Router>
-        <div id="links">
-          <Link to="/">Home</Link>
-          <Link to="/blog">Blog</Link>
-          <Link to="/contact">Contact</Link>
-        </div>
-        <div className="app">
-          <div className="main-content">
-            <Routes>
-              <Route path="/chart" element={<Chart />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/home" element={<Home />} />
-            </Routes>
-          </div>
-        </div>
-      </Router>
-      <p id="transcript">Transcript: {transcript}</p>
-      <button
-        onClick={() => {
-          const recognition = new window.SpeechRecognition();
-          recognition.start();
-        }}
-      >
-        Start Listening
-      </button>
-    </>
+return (
+    <><><Router>
+    <div id="links">
+      <Link to="/">Home</Link>
+      <Link to="/blog">Blog</Link>
+      <Link to="/contact">Contact</Link>
+    </div>
+    <div className="app">
+      <div className="main-content">
+        <Routes>
+          {/* Route for Login */}
+          {/* <Route
+      path="/"
+      element={token ? (
+        <Navigate to={/${role}-dashboard} />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
+          {/* <Route path="/login" element={<SignIn />} /> */}
+          {/* Student Dashboard */}
+          {/* <Route
+      path="/student-dashboard"
+      element={role === "student" ? (
+        <StudentDboard />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
+          {/* Warden Dashboard */}
+          {/* <Route
+      path="/warden-dashboard"
+      element={role === "warden" ? (
+        <WardenDboard />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
+          {/* Admin Dashboard */}
+          {/* <Route
+      path="/admin-dashboard"
+      element={role === "admin" ? (
+        <AdminDboard />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
+          {/* Additional Routes */}
+          {/* <Route path="/issue-form" element={<Forms />} />
+    <Route path="/chat-app" element={<ChatMessenger />} />
+    <Route path="/dashboard" element={<Dashboards />} /> */}
+          <Route path="/chart" element={<Chart />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/home" element={<Home />} />
+          {/* Fallback Route */}
+          {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
+        </Routes>
+      </div>
+    </div>
+  </Router><p id="transcript">Transcript:{transcript}</p></>
+  <button onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-US' })}>
+  Start
+</button>
+ </>
   );
 };
 
-export default App;
+export default App; 
