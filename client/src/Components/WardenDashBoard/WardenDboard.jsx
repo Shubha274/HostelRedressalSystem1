@@ -28,10 +28,10 @@ const WardenDboard = () => {
       <Navbar />
       <Sidebar />
       <ChatbotWar />
-      <WardenRole />
+      {/* <WardenRole /> */}
       <Chart />
       <Table />
-      <pre>hello i am the warden of hostel sangam</pre>
+
       {/* {token && <Sidebar role={role} />} */}
     </div>
   );

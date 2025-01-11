@@ -6,7 +6,7 @@ const INITIAL_STATE = { user: null, isFetching: false, error: false };
 const AuthContext = createContext(INITIAL_STATE);
 
 // Auth Provider Component
-export const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -14,49 +14,15 @@ export const AuthProvider = ({ children }) => {
     const res = await axios.post("/auth/logout");
     setCurrentUser(null);
   };
-  const [role, setRole] = useState(null);
-
-  // Load token from localStorage on initial render
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      try {
-        const decodedToken = jwtDecode(storedToken);
-        setToken(storedToken);
-        setRole(decodedToken?.role); // Extract role from token
-      } catch (error) {
-        console.error("Invalid token:", error);
-        setToken(null);
-        setRole(null);
-      }
-    }
-  }, []);
-
-  // Login function
-  const login = (newToken) => {
-    try {
-      const decodedToken = jwtDecode(newToken);
-      setToken(newToken);
-      setRole(decodedToken?.role);
-      localStorage.setItem("token", newToken); // Persist token
-    } catch (error) {
-      console.error("Failed to decode token:", error);
-    }
-  };
-
-  // Logout function
-  const logout = () => {
-    setToken(null);
-    setRole(null);
-    localStorage.removeItem("token");
-  };
-
+    localStorage.setItem("user", JSON.stringify(currentUser));
+  }, [currentuser]);
   return (
-    <AuthContext.Provider value={{ token, role, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+export default AuthProvider;
 // Custom hook to use Auth Context
-export const useAuth = () => useContext(AuthContext);
