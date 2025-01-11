@@ -40,7 +40,9 @@ const App = () => {
   if (!browserSupportsSpeechRecognition) {
     console.warn("Browser does not support speech recognition.");
   }
-
+else{
+  console.warn("Browsersupport speech recognition.");
+}
   return (
     <Router>
       <div className="app">
