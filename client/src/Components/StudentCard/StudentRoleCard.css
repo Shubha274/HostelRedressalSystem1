@@ -5,15 +5,16 @@ body {
   position: relative;
 }
 .card {
-  position: absolute;
-  /* left: 50%; */
-  transform: translateX(-50%);
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 2px;
-  width: 280px;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+    left: 60%;
+    top:0%;
+    position: relative;
+    border: 1px solid #ccc;
+    transform: translateY(40%);
+    border-radius: 10px;
+    padding: 50px;
+    width: 280px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
 }
 
 /* Highlighted issue style */
@@ -55,8 +56,6 @@ body {
   padding: 4px 8px;
   font-size: 0.85em;
   border-radius: 4px;
-  left: 10px;
-  position: relative;
   color: #fff;
 }
 
@@ -76,8 +75,6 @@ body {
   padding: 8px 12px;
   border-radius: 4px;
   font-size: 0.9em;
-  right: 10px;
-  position: relative;
   cursor: pointer;
 }
 
