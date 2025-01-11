@@ -1,6 +1,6 @@
 import React from "react";
 import "./WardenDboard.css";
-
+import WardenRole from "../WardebCard/WardenRoleCard";
 import ChatbotWar from "../ChatbotWar/ChatbotWar";
 import Chart from "../Chartss/Chart";
 import Navbar from "../NavBar/Navbar";
@@ -28,7 +28,7 @@ const WardenDboard = () => {
       <Navbar />
       <Sidebar />
       <ChatbotWar />
-
+      <WardenRole />
       <Chart />
       <Table />
       <pre>hello i am the warden of hostel sangam</pre>

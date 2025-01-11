@@ -1,0 +1,86 @@
+/* StudentRoleCard.css */
+
+/* Card container styles */
+body {
+  position: relative;
+}
+.card {
+  position: absolute;
+  /* left: 50%; */
+  transform: translateX(-50%);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 2px;
+  width: 280px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* Highlighted issue style */
+.highlighted-issue {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 8px;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Date style */
+.highlighted-date {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Description text style */
+.text-style {
+  font-size: 0.95em;
+  color: #444;
+  margin-bottom: 16px;
+}
+
+/* Status and delete button row styles */
+.status-delete-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+/* Status box styles */
+.status-box {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.85em;
+  border-radius: 4px;
+  left: 10px;
+  position: relative;
+  color: #fff;
+}
+
+.status-box.pending {
+  background-color: red; /* Orange for pending status */
+}
+
+.status-box.resolved {
+  background-color: #2ecc71; /* Green for resolved status */
+}
+
+/* Delete button styles */
+.delete-button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  right: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}

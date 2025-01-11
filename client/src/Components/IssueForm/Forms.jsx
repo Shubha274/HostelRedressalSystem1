@@ -1,82 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./forms.css";
 import axios from "axios";
-import Navbar from "../NavBar/Navbar";
-import Sidebar from "../Sidebar/Sidebar";
-import { jwtDecode } from "jwt-decode";
-import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
-const token = localStorage.getItem("token");
-let role = null;
 
-// Decode the token to get the role if the token exists
-if (token) {
-  try {
-    const decodedToken = jwtDecode(token);
-    role = decodedToken.role; // Extract the role from the decoded token
-  } catch (error) {
-    console.error("Invalid token", error);
-  }
-}
 const Forms = ({ role }) => {
   const [formData, setFormData] = useState({
     name: "",
     roomNo: "",
     issueDescription: "",
   });
-  const [isListening, setIsListening] = useState(false);
-  const [focusedField, setFocusedField] = useState("");
-  const [recognitionError, setRecognitionError] = useState("");
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  if (!SpeechRecognition) {
-    return <p>Sorry, your browser does not support speech recognition.</p>;
-  }
-
-  const recognition = new SpeechRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.lang = "en-IN";
-
-  const startListening = () => {
-    if (!focusedField) {
-      alert("Please focus on a field to start voice input.");
-      return;
-    }
-
-    setIsListening(true);
-    setRecognitionError("");
-    recognition.start();
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-
-      setFormData((prevData) => ({
-        ...prevData,
-        [focusedField]:
-          focusedField === "issueDescription"
-            ? prevData[focusedField] + " " + transcript
-            : transcript, // Replace for name and roomNo; append for issueDescription
-      }));
-    };
-
-    recognition.onerror = (event) => {
-      console.error("Speech recognition error:", event.error);
-      setRecognitionError("Speech recognition failed. Please try again.");
-      setIsListening(false);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-  };
-
-  useEffect(() => {
-    return () => {
-      recognition.stop();
-    };
-  }, []);
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,11 +17,6 @@ const Forms = ({ role }) => {
       ...prevData,
       [name]: value,
     }));
-  };
-
-  const handleInput = (e) => {
-    e.target.style.height = "auto";
-    e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   const handleSubmit = async (e) => {
@@ -100,23 +28,29 @@ const Forms = ({ role }) => {
         formData
       );
       console.log("Issue submitted:", response.data);
-      alert("Issue submitted successfully!");
+
+      // Show success message
+      setSuccessMessage("Issue generated successfully!");
+
+      // Reset form fields
+      setFormData({
+        name: "",
+        roomNo: "",
+        issueDescription: "",
+      });
+
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
     } catch (error) {
       console.error("Error submitting issue:", error);
       alert("Failed to submit issue.");
     }
-
-    setFormData({
-      name: "",
-      roomNo: "",
-      issueDescription: "",
-    });
   };
 
   return (
     <div className="container">
-      <Navbar />;<Sidebar />
-      <ChatbotAdm />
       <h2>Issue Generation Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -127,7 +61,6 @@ const Forms = ({ role }) => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            onFocus={() => setFocusedField("name")}
           />
         </div>
 
@@ -140,7 +73,6 @@ const Forms = ({ role }) => {
               name="roomNo"
               value={formData.roomNo}
               onChange={handleChange}
-              onFocus={() => setFocusedField("roomNo")}
             />
           </div>
         )}
@@ -152,29 +84,17 @@ const Forms = ({ role }) => {
             name="issueDescription"
             value={formData.issueDescription}
             onChange={handleChange}
-            onFocus={() => setFocusedField("issueDescription")}
-            onInput={handleInput}
             rows="4"
           />
         </div>
-
-        <button
-          type="button"
-          onClick={startListening}
-          disabled={isListening}
-          aria-label="Start voice input"
-        >
-          {isListening ? "Listening..." : "Start Listening"}
-        </button>
-
-        {recognitionError && (
-          <p className="error-message">{recognitionError}</p>
-        )}
 
         <button type="submit" aria-label="Submit issue">
           Generate Issue
         </button>
       </form>
+
+      {/* Display success message */}
+      {successMessage && <p className="success-message">{successMessage}</p>}
     </div>
   );
 };

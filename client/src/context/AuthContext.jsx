@@ -1,12 +1,19 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
+
 import { jwtDecode } from "jwt-decode";
 const INITIAL_STATE = { user: null, isFetching: false, error: false };
 // Create the Auth Context
 const AuthContext = createContext(INITIAL_STATE);
 
 // Auth Provider Component
-export const AuthProvider = () => {
-  const [state, dispatch] = useReducer(null);
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
+  const logout = async (inputs) => {
+    const res = await axios.post("/auth/logout");
+    setCurrentUser(null);
+  };
   const [role, setRole] = useState(null);
 
   // Load token from localStorage on initial render

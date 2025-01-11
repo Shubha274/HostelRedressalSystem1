@@ -1,6 +1,5 @@
 /* General Styles */
 * {
-  margin: 2px;
   padding: 0;
   box-sizing: border-box; /* Ensures padding/margin don't affect layout */
 }

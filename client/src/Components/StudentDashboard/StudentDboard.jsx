@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./StudentDboard.css";
+import StudentRole from "../StudentCard/StudentRoleCard";
 import Table from "../Tables/Table";
 import "../IssueForm/Forms";
 import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
@@ -15,7 +16,7 @@ const StudentDboard = () => {
       <Navbar />
       <h1>our student dashboard page</h1>
       <p>i am shubha</p>
-
+      <StudentRole />
       <Sidebar />
       <Table />
       <ChatbotAdm />
