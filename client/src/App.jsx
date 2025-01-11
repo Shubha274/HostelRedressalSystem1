@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,34 +14,30 @@ import Blog from "./Components/Voice/Blog";
 import Contact from "./Components/Voice/Contact";
 
 const App = () => {
+  const [redirectUrl, setRedirectUrl] = useState("");
+
+  // Voice commands configuration
   const commands = [
     {
       command: ["Go to *", "Open *"],
-      callback: (redirectPage) => setRedirectUrl(redirectPage.toLowerCase()),
+      callback: (redirectPage) => handleRedirect(redirectPage),
     },
   ];
 
   const { transcript } = useSpeechRecognition({ commands });
-  const [redirectUrl, setRedirectUrl] = useState("");
 
-  useEffect(() => {
-    // Normalize the redirect URL to match the route paths
-    if (redirectUrl) {
-      const normalizedPath = redirectUrl
-        .replace(/\s+/g, "-") // Replace spaces with hyphens for multi-word paths
-        .trim();
-      setPath(normalizedPath);
+  // Handle redirection based on spoken words
+  const handleRedirect = (redirectPage) => {
+    const normalizedPath = redirectPage
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-"); // Normalize the path
+    if (["home", "blog", "contact"].includes(normalizedPath)) {
+      setRedirectUrl(normalizedPath);
+    } else {
+      console.error(`Path "${redirectPage}" does not exist.`);
     }
-  }, [redirectUrl]);
-
-  const [path, setPath] = useState("");
-
-  useEffect(() => {
-    // Clear the path after navigation
-    if (path) {
-      setTimeout(() => setPath(""), 1000); // Delay to ensure navigation happens
-    }
-  }, [path]);
+  };
 
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
     return <p>Your browser does not support speech recognition.</p>;
@@ -57,7 +53,7 @@ const App = () => {
 
       <div className="app">
         <div className="main-content">
-          {path && <Navigate to={`/${path}`} replace />} {/* Navigate based on voice command */}
+          {redirectUrl && <Navigate to={`/${redirectUrl}`} replace />} {/* Navigate to the route */}
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
