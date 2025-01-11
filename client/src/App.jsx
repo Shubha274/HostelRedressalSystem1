@@ -1,110 +1,69 @@
-import React, { useCallback, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  Link,
-} from "react-router-dom";
-import "regenerator-runtime/runtime";
-
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
-import SignIn from "./Components/SignPage/SignIn";
-import StudentDboard from "./Components/StudentDashboard/StudentDboard";
-import WardenDboard from "./Components/WardenDashBoard/WardenDboard";
-import AdminDboard from "./Components/AdminDashboard/AdminDboard";
-import Forms from "./Components/IssueForm/Forms";
-import ChatMessenger from "./Components/ChatApp/ChatMessenger";
-import Dashboards from "./Components/Dasboard/Dashboards";
-import Chart from "./Components/Chartss/Chart";
 import Blog from "./Components/Voice/Blog";
 import Contact from "./Components/Voice/Contact";
 import Home from "./Components/Voice/Home";
 
 const App = () => {
-  const token = localStorage.getItem("token");
-  let role = null;
+  const [redirectUrl, setRedirectUrl] = useState("");
 
-  if (token) {
-    try {
-      const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT token
-      role = decodedToken.role; // Extract the role from the decoded token
-      console.log("Decoded Role:", role); // Debugging log
-    } catch (error) {
-      console.error("Invalid token", error);
+  const commands = [
+    {
+      command: ["Go to *", "Open *"],
+      callback: (redirectPage) => {
+        const formattedPage = redirectPage.toLowerCase().trim();
+        setRedirectUrl(formattedPage);
+      },
+    },
+  ];
+
+  const { transcript, listening, browserSupportsSpeechRecognition } =
+    useSpeechRecognition({ commands });
+
+  if (!browserSupportsSpeechRecognition) {
+    return <p>Browser does not support speech recognition.</p>;
+  }
+
+  // Map pages to routes
+  const pageRoutes = {
+    home: "/home",
+    blog: "/blog",
+    contact: "/contact",
+  };
+
+  // Handle redirection
+  let redirectMessage = "";
+  if (redirectUrl) {
+    if (pageRoutes[redirectUrl]) {
+      window.location.href = pageRoutes[redirectUrl];
+    } else {
+      redirectMessage = `Could not find the page: ${redirectUrl}`;
     }
   }
 
-const commands=[
-  {
-    command:["Go to *","Open"],
-    callback:(redirectPage)=>setRedirectUrl(redirectPage),
-  }
-]
-const {transcript}=useSpeechRecognition({commands});
-const [redirectUrl,setRedirectUrl]=useState("");
-
-return (
-    <><><Router>
-    
-    <div className="app">
-      <div className="main-content">
+  return (
+    <div>
+      <Router>
         <Routes>
-          {/* Route for Login */}
-          {/* <Route
-      path="/"
-      element={token ? (
-        <Navigate to={/${role}-dashboard} />
-      ) : (
-        <Navigate to="/login" />
-      )} /> */}
-          {/* <Route path="/login" element={<SignIn />} /> */}
-          {/* Student Dashboard */}
-          {/* <Route
-      path="/student-dashboard"
-      element={role === "student" ? (
-        <StudentDboard />
-      ) : (
-        <Navigate to="/login" />
-      )} /> */}
-          {/* Warden Dashboard */}
-          {/* <Route
-      path="/warden-dashboard"
-      element={role === "warden" ? (
-        <WardenDboard />
-      ) : (
-        <Navigate to="/login" />
-      )} /> */}
-          {/* Admin Dashboard */}
-          {/* <Route
-      path="/admin-dashboard"
-      element={role === "admin" ? (
-        <AdminDboard />
-      ) : (
-        <Navigate to="/login" />
-      )} /> */}
-          {/* Additional Routes */}
-          {/* <Route path="/issue-form" element={<Forms />} />
-    <Route path="/chat-app" element={<ChatMessenger />} />
-    <Route path="/dashboard" element={<Dashboards />} /> */}
-          <Route path="/chart" element={<Chart />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/home" element={<Home />} />
-          {/* Fallback Route */}
-          {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
         </Routes>
+      </Router>
+      <div>
+        <button
+          onClick={() =>
+            SpeechRecognition.startListening({ continuous: true, language: "en-US" })
+          }
+        >
+          {listening ? "Listening..." : "Start Listening"}
+        </button>
+        <button onClick={SpeechRecognition.stopListening}>Stop Listening</button>
       </div>
+      <p>Transcript: {transcript}</p>
+      {redirectMessage && <p>{redirectMessage}</p>}
     </div>
-  </Router><p id="transcript">Transcript:{transcript}</p></>
-  <button
-        onClick={() =>
-          SpeechRecognition.startListening({ continuous: true, language: "en-US" })
-        }
-      >
-        Start
-      </button>
-  </>
   );
 };
 
