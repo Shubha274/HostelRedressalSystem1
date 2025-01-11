@@ -43,12 +43,12 @@ const commands=[
 ]
 const {transcript}=useSpeechRecognition({commands});
 const [redirectUrl,setRedirectUrl]=useState("");
-const pages=["home","blog","contact"];
-const urls={
-  home:"/",
-  blog:"./Components/Voice/Blog",
-  contact:"./Components/Voice/Contact",
-}
+// const pages=["home","blog","contact"];
+// const urls={
+//   home:"/",
+//   blog:"./Components/Voice/Blog",
+//   contact:"./Components/Voice/Contact",
+// }
 
 return (
     <><><Router>
