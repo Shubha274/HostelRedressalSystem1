@@ -47,75 +47,62 @@ const {transcript}=useSpeechRecognition({commands});
 const [redirectUrl,setRedirectUrl]=useState("");
 
 return (
-    <Router>
-      <div id="links">
-        <Link to="/">Home</Link>
-        <Link to="/blog">Blog</Link>
-        <Link to="/contact">Contact</Link>
+    <><Router>
+    <div id="links">
+      <Link to="/">Home</Link>
+      <Link to="/blog">Blog</Link>
+      <Link to="/contact">Contact</Link>
+    </div>
+    <div className="app">
+      <div className="main-content">
+        <Routes>
+          {/* Route for Login */}
+          <Route
+            path="/"
+            element={token ? (
+              <Navigate to={`/${role}-dashboard`} />
+            ) : (
+              <Navigate to="/login" />
+            )} />
+          <Route path="/login" element={<SignIn />} />
+          {/* Student Dashboard */}
+          <Route
+            path="/student-dashboard"
+            element={role === "student" ? (
+              <StudentDboard />
+            ) : (
+              <Navigate to="/login" />
+            )} />
+          {/* Warden Dashboard */}
+          <Route
+            path="/warden-dashboard"
+            element={role === "warden" ? (
+              <WardenDboard />
+            ) : (
+              <Navigate to="/login" />
+            )} />
+          {/* Admin Dashboard */}
+          <Route
+            path="/admin-dashboard"
+            element={role === "admin" ? (
+              <AdminDboard />
+            ) : (
+              <Navigate to="/login" />
+            )} />
+          {/* Additional Routes */}
+          <Route path="/issue-form" element={<Forms />} />
+          <Route path="/chat-app" element={<ChatMessenger />} />
+          <Route path="/dashboard" element={<Dashboards />} />
+          <Route path="/chart" element={<Chart />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/home" element={<Home />} />
+          {/* Fallback Route */}
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        </Routes>
       </div>
-      <div className="app">
-        <div className="main-content">
-          <Routes>
-            {/* Route for Login */}
-            <Route
-              path="/"
-              element={
-                token ? (
-                  <Navigate to={`/${role}-dashboard`} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route path="/login" element={<SignIn />} />
-            {/* Student Dashboard */}
-            <Route
-              path="/student-dashboard"
-              element={
-                role === "student" ? (
-                  <StudentDboard />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            {/* Warden Dashboard */}
-            <Route
-              path="/warden-dashboard"
-              element={
-                role === "warden" ? (
-                  <WardenDboard />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            {/* Admin Dashboard */}
-            <Route
-              path="/admin-dashboard"
-              element={
-                role === "admin" ? (
-                  <AdminDboard />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            {/* Additional Routes */}
-            <Route path="/issue-form" element={<Forms />} />
-            <Route path="/chat-app" element={<ChatMessenger />} />
-            <Route path="/dashboard" element={<Dashboards />} />
-            <Route path="/chart" element={<Chart />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/home" element={<Home />} />
-            {/* Fallback Route */}
-            <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
-    // <p id="transcript">Transcript:{transcript}</p>
+    </div>
+  </Router><p id="transcript">Transcript:{transcript}</p></>
   );
 };
 
