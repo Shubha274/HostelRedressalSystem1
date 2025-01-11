@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./forms.css";
 import axios from "axios";
+import Navbar from "../NavBar/Navbar";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Forms = ({ role }) => {
   const [formData, setFormData] = useState({
@@ -92,7 +94,8 @@ const Forms = ({ role }) => {
           Generate Issue
         </button>
       </form>
-
+      <Navbar />
+      <Sidebar />
       {/* Display success message */}
       {successMessage && <p className="success-message">{successMessage}</p>}
     </div>

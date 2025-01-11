@@ -5,16 +5,16 @@ body {
   position: relative;
 }
 .card {
-    left: 60%;
-    top:0%;
-    position: relative;
-    border: 1px solid #ccc;
-    transform: translateY(40%);
-    border-radius: 10px;
-    padding: 50px;
-    width: 280px;
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+  left: 75%;
+  top: 0%;
+  position: relative;
+  border: 1px solid #ccc;
+  transform: translateY(40%);
+  border-radius: 10px;
+  padding: 50px;
+  width: 280px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 /* Highlighted issue style */
