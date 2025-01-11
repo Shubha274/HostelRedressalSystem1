@@ -37,20 +37,20 @@ const App = () => {
 
 const commands=[
   {
-    command:["Go to *","Open *"],
+    command:["Go to *","Open"],
     callback:(redirectPage)=>setRedirectUrl(redirectPage),
   }
 ]
 const {transcript}=useSpeechRecognition({commands});
 const [redirectUrl,setRedirectUrl]=useState("");
-// const pages=["home","blog","contact"];
+
 return (
     <><><Router>
-    {/* <div id="links">
+    <div id="links">
       <Link to="/">Home</Link>
       <Link to="/blog">Blog</Link>
       <Link to="/contact">Contact</Link>
-    </div> */}
+    </div>
     <div className="app">
       <div className="main-content">
         <Routes>
@@ -101,16 +101,11 @@ return (
       </div>
     </div>
   </Router><p id="transcript">Transcript:{transcript}</p></>
-  <button
-  onClick={() => {
-    console.log("Start button clicked");
-    SpeechRecognition.startListening({ continuous: true, language: "en-US" });
-  }}
->
+  <button onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-US' })}>
   Start
 </button>
-  </>
+ </>
   );
 };
 
-export default App;
+export default App; 
