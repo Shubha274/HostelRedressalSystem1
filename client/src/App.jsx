@@ -37,35 +37,35 @@ const App = () => {
     }
   }
 
-const commands=[
-  {
-    command:["Go to *","Open"],
-    callback:(redirectPage)=>setRedirectUrl(redirectPage),
-  }
-]
-const {transcript}=useSpeechRecognition({commands});
-const [redirectUrl,setRedirectUrl]=useState("");
-const pages=["home","blog","contact"];
-const urls={
-  home:"/",
-  blog:"./Components/Voice/Blog",
-  contact:"./Components/Voice/Contact",
-}
-if(!SpeechRecognition.browserSupportsSpeechRecognition)
-{
-   return null;
-}
-let redirect="";
-if(redirectUrl)
-{
-  if(pages.includes(redirectUrl))
-  {
-    redirect=<Redirect to={urls[redirectUrl]}/>
-  }
-  else{
-    redirect=<p>Could not find page : {redirectUrl}</p>;
-  }
-}
+// const commands=[
+//   {
+//     command:["Go to *","Open"],
+//     callback:(redirectPage)=>setRedirectUrl(redirectPage),
+//   }
+// ]
+// const {transcript}=useSpeechRecognition({commands});
+// const [redirectUrl,setRedirectUrl]=useState("");
+// const pages=["home","blog","contact"];
+// const urls={
+//   home:"/",
+//   blog:"./Components/Voice/Blog",
+//   contact:"./Components/Voice/Contact",
+// }
+// if(!SpeechRecognition.browserSupportsSpeechRecognition)
+// {
+//    return null;
+// }
+// let redirect="";
+// if(redirectUrl)
+// {
+//   if(pages.includes(redirectUrl))
+//   {
+//     redirect=<Redirect to={urls[redirectUrl]}/>
+//   }
+//   else{
+//     redirect=<p>Could not find page : {redirectUrl}</p>;
+//   }
+// }
 return (
     <><><Router>
     <div id="links">
