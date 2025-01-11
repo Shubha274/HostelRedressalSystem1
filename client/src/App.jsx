@@ -102,12 +102,13 @@ return (
     </div>
   </Router><p id="transcript">Transcript:{transcript}</p></>
   <button
-        onClick={() =>
-          SpeechRecognition.startListening({ continuous: true, language: "en-US" })
-        }
-      >
-        Start
-      </button>
+  onClick={() => {
+    console.log("Start button clicked");
+    SpeechRecognition.startListening({ continuous: true, language: "en-US" });
+  }}
+>
+  Start
+</button>
   </>
   );
 };
