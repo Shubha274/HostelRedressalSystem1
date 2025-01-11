@@ -9,7 +9,7 @@ import {
   Link,
   redirect,
 } from "react-router-dom";
-import SpeechRecognition ,{useSpeechRecognition} from "react-speech-recognition";
+// import SpeechRecognition ,{useSpeechRecognition} from "react-speech-recognition";
 import { jwtDecode } from "jwt-decode"; // Correct import
 import SignIn from "./Components/SignPage/SignIn";
 import StudentDboard from "./Components/StudentDashboard/StudentDboard";
