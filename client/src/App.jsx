@@ -1,5 +1,3 @@
-// React App for BV Hostel Portal
-
 import React, { useCallback, useState } from "react";
 import {
   BrowserRouter as Router,
@@ -44,28 +42,8 @@ const commands=[
   }
 ]
 const {transcript}=useSpeechRecognition({commands});
-// const [redirectUrl,setRedirectUrl]=useState("");
-// const pages=["home","blog","contact"];
-// const urls={
-//   home:"/",
-//   blog:"./Components/Voice/Blog",
-//   contact:"./Components/Voice/Contact",
-// }
-// if(!SpeechRecognition.browserSupportsSpeechRecognition)
-// {
-//    return null;
-// }
-// let redirect="";
-// if(redirectUrl)
-// {
-//   if(pages.includes(redirectUrl))
-//   {
-//     redirect=<Redirect to={urls[redirectUrl]}/>
-//   }
-//   else{
-//     redirect=<p>Could not find page : {redirectUrl}</p>;
-//   }
-// }
+const [redirectUrl,setRedirectUrl]=useState("");
+
 return (
     <><><Router>
     <div id="links">
@@ -80,7 +58,7 @@ return (
           {/* <Route
       path="/"
       element={token ? (
-        <Navigate to={`/${role}-dashboard`} />
+        <Navigate to={/${role}-dashboard} />
       ) : (
         <Navigate to="/login" />
       )} /> */}
@@ -117,16 +95,17 @@ return (
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/home" element={<Home />} />
-          {redirect}
           {/* Fallback Route */}
           {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
         </Routes>
       </div>
     </div>
   </Router><p id="transcript">Transcript:{transcript}</p></>
+  {/* <button onClick={SpeechRecognition.startListening}>Start</button> */}
   <button onClick={() => SpeechRecognition.startListening({ continuous: true, language: 'en-US' })}>
   Start
-</button></>
+</button>
+  </>
   );
 };
 
