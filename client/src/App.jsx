@@ -98,7 +98,7 @@ return (
           <Route path="/contact" element={<Contact />} />
           <Route path="/home" element={<Home />} />
           {/* Fallback Route */}
-          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+          {/* <Route path="*" element={<h1>404 - Page Not Found</h1>} /> */}
         </Routes>
       </div>
     </div>
