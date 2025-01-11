@@ -47,7 +47,7 @@ const {transcript}=useSpeechRecognition({commands});
 const [redirectUrl,setRedirectUrl]=useState("");
 
 return (
-    <><Router>
+    <><><Router>
     <div id="links">
       <Link to="/">Home</Link>
       <Link to="/blog">Blog</Link>
@@ -58,41 +58,41 @@ return (
         <Routes>
           {/* Route for Login */}
           {/* <Route
-            path="/"
-            element={token ? (
-              <Navigate to={`/${role}-dashboard`} />
-            ) : (
-              <Navigate to="/login" />
-            )} /> */}
+      path="/"
+      element={token ? (
+        <Navigate to={`/${role}-dashboard`} />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
           {/* <Route path="/login" element={<SignIn />} /> */}
           {/* Student Dashboard */}
           {/* <Route
-            path="/student-dashboard"
-            element={role === "student" ? (
-              <StudentDboard />
-            ) : (
-              <Navigate to="/login" />
-            )} /> */}
+      path="/student-dashboard"
+      element={role === "student" ? (
+        <StudentDboard />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
           {/* Warden Dashboard */}
           {/* <Route
-            path="/warden-dashboard"
-            element={role === "warden" ? (
-              <WardenDboard />
-            ) : (
-              <Navigate to="/login" />
-            )} /> */}
+      path="/warden-dashboard"
+      element={role === "warden" ? (
+        <WardenDboard />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
           {/* Admin Dashboard */}
           {/* <Route
-            path="/admin-dashboard"
-            element={role === "admin" ? (
-              <AdminDboard />
-            ) : (
-              <Navigate to="/login" />
-            )} /> */}
+      path="/admin-dashboard"
+      element={role === "admin" ? (
+        <AdminDboard />
+      ) : (
+        <Navigate to="/login" />
+      )} /> */}
           {/* Additional Routes */}
           {/* <Route path="/issue-form" element={<Forms />} />
-          <Route path="/chat-app" element={<ChatMessenger />} />
-          <Route path="/dashboard" element={<Dashboards />} /> */}
+    <Route path="/chat-app" element={<ChatMessenger />} />
+    <Route path="/dashboard" element={<Dashboards />} /> */}
           <Route path="/chart" element={<Chart />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
@@ -102,7 +102,7 @@ return (
         </Routes>
       </div>
     </div>
-  </Router><p id="transcript">Transcript:{transcript}</p></>
+  </Router><p id="transcript">Transcript:{transcript}</p></><button onClick={SpeechRecognition.startListening}>Start</button></>
   );
 };
 
