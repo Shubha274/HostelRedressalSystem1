@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/create", createIssue);
 
 // Route to get all issues
-router.get("/", getIssues);
+// router.get("/", getIssues);
 
 // // Route to update issue status
 // router.put("/update-status", updateIssueStatus);
