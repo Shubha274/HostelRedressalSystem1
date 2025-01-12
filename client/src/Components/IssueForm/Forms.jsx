@@ -13,12 +13,25 @@ const Forms = () => {
     issueDescription: "",
   });
 
-  const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  const [errorMessage, setErrorMessage] = useState(""); // Error message for validation
+  const [successMessage, setSuccessMessage] = useState(""); // Success message
+  const [assignedPriority, setAssignedPriority] = useState(""); // Priority dynamically assigned
   const [isListening, setIsListening] = useState(false);
   const [focusedField, setFocusedField] = useState("");
   const [recognitionError, setRecognitionError] = useState("");
   const [role, setRole] = useState(null); // Role from token
   const [username, setUsername] = useState(null); // Username from token
+
+  // Define keyword-priority mappings
+  const keywordPriorityMap = {
+    electricity: "High",
+    water: "High",
+    maintenance: "Medium",
+    cleaning: "Low",
+    "room issue": "Medium",
+    health: "High", // Added health as high priority
+    others: "Low",
+  };
 
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -82,12 +95,56 @@ const Forms = () => {
     }
   }, []);
 
+  const validateTopic = (value) => {
+    const hasNumbers = /\d/; // Regex to check for numeric values
+    const wordCount = value.trim().split(/\s+/).length; // Count words
+    if (hasNumbers.test(value)) {
+      return "Topic cannot contain numeric values.";
+    }
+    if (wordCount > 5) {
+      return "Topic cannot exceed 5 words.";
+    }
+    return ""; // No errors
+  };
+
+  const validateDescription = (value) => {
+    const hasOnlyNumbers = /^\d+$/; // Regex to check if only numbers
+    if (hasOnlyNumbers.test(value)) {
+      return "Description cannot contain only numeric values.";
+    }
+    return ""; // No errors
+  };
+
+  const validateRoomNo = (value) => {
+    const roomNo = Number(value);
+    if (isNaN(roomNo)) {
+      return "Room number must be a valid number.";
+    }
+    if (roomNo >= 400) {
+      return "Room number must be less than 400.";
+    }
+    return ""; // No errors
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    let validationError = "";
+    if (name === "name") {
+      validationError = validateTopic(value);
+    } else if (name === "issueDescription") {
+      validationError = validateDescription(value);
+    } else if (name === "roomNo") {
+      validationError = validateRoomNo(value);
+    }
+
+    setErrorMessage(validationError); // Set error message if validation fails
+    if (!validationError) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleInput = (e) => {
@@ -95,24 +152,46 @@ const Forms = () => {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
+  // Keyword-based priority determination
+  const determinePriority = (name, description) => {
+    const combinedText = `${name} ${description}`.toLowerCase();
+
+    for (const keyword in keywordPriorityMap) {
+      if (combinedText.includes(keyword)) {
+        return keywordPriorityMap[keyword];
+      }
+    }
+
+    return "Low"; // Default priority if no keyword matches
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Final validation before submission
+    const topicError = validateTopic(formData.name);
+    const descriptionError = validateDescription(formData.issueDescription);
+    const roomNoError = validateRoomNo(formData.roomNo);
+    if (topicError || descriptionError || roomNoError) {
+      setErrorMessage(topicError || descriptionError || roomNoError);
+      return;
+    }
+
+    // Determine priority based on keywords
+    const priority = determinePriority(formData.name, formData.issueDescription);
+    setAssignedPriority(priority); // Display priority in UI
+
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/issues/create",
-        {
-          ...formData,
-          username,
-          role,
-        }
-        // formData,
-        // username,
-        // role
-      );
+      const response = await axios.post("http://localhost:8080/api/issues/create", {
+        ...formData,
+        priority, // Add dynamically assigned priority
+        username,
+        role,
+      });
 
       console.log("Issue submitted:", response.data);
-      alert("Issue submitted successfully!");
+      setSuccessMessage("Issue submitted successfully!");
+      setErrorMessage(""); // Clear error message
 
       // Reset the form
       setFormData({
@@ -122,7 +201,7 @@ const Forms = () => {
       });
     } catch (error) {
       console.error("Error submitting issue:", error);
-      alert("Failed to submit issue. Please try again.");
+      setErrorMessage("Failed to submit issue. Please try again.");
     }
   };
 
@@ -141,7 +220,7 @@ const Forms = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            placeholder="at max 5 words"
+            placeholder="At max 5 words"
             onFocus={() => setFocusedField("name")}
             required
           />
@@ -157,6 +236,7 @@ const Forms = () => {
               value={formData.roomNo}
               onChange={handleChange}
               onFocus={() => setFocusedField("roomNo")}
+              placeholder="Enter a number less than 400"
               required={role === "student"}
             />
           </div>
@@ -176,6 +256,8 @@ const Forms = () => {
           />
         </div>
 
+        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Error Message */}
+
         <button
           type="button"
           onClick={startListening}
@@ -185,14 +267,18 @@ const Forms = () => {
           {isListening ? "Listening..." : "Start Listening"}
         </button>
 
-        {recognitionError && (
-          <p className="error-message">{recognitionError}</p>
-        )}
+        {recognitionError && <p className="error-message">{recognitionError}</p>}
 
         <button type="submit" aria-label="Submit issue">
           Generate Issue
         </button>
       </form>
+
+      {successMessage && (
+        <p className="success-message">
+          {successMessage} Priority assigned: <strong>{assignedPriority}</strong>
+        </p>
+      )}
     </div>
   );
 };
