@@ -3,7 +3,7 @@ import "./forms.css";
 import axios from "axios";
 import Navbar from "../NavBar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 
 const Forms = () => {
@@ -101,9 +101,12 @@ const Forms = () => {
         "http://localhost:8080/api/issues/create",
         {
           ...formData,
-          username, // Send the username extracted from the token
-          role, // Include role for validation
+          username,
+          role,
         }
+        // formData,
+        // username,
+        // role
       );
 
       console.log("Issue submitted:", response.data);
