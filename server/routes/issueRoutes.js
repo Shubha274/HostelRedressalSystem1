@@ -1,11 +1,14 @@
 const express = require("express");
-const { createIssue } = require("../controllers/issueController");
+const {
+  createIssue,
+  getLatestIssue,
+} = require("../controllers/issueController");
 
 const router = express.Router();
 
 // Route to create a new issue
 router.post("/create", createIssue);
-
+router.get("/:username", getLatestIssue);
 // Route to get all issues
 // router.get("/", getIssues);
 

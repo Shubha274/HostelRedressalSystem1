@@ -39,3 +39,31 @@ exports.createIssue = async (req, res) => {
     res.status(500).json({ message: "Failed to create issue" });
   }
 };
+exports.getLatestIssue = async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const connection = await connectDB();
+    const query = `
+    SELECT 
+      description, 
+      issueGenerated, 
+      issueSolved, 
+      issueStatus 
+    FROM issues WHERE username = ? 
+    ORDER BY issueGenerated DESC 
+    LIMIT 1;
+  `;
+
+    const [rows] = await connection.query(query, [username]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "No issues found." });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error("Error fetching the latest issue:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
