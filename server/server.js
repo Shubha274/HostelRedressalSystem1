@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("express").json;
 const morgan = require("morgan");
 const cors = require("cors");
-
+const issueRoutes = require("./routes/issueRoutes");
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 const connectDB = require("./config/db");
@@ -31,6 +31,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/issues", issueRoutes);
 // Use routes
 
 // Start server
