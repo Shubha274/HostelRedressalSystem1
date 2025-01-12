@@ -134,13 +134,14 @@ const Forms = () => {
       <h2>Issue Generation Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Topic:</label>
           <input
             type="text"
             id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            placeholder="at max 5 words"
             onFocus={() => setFocusedField("name")}
             required
           />

@@ -17,7 +17,7 @@ import ChatMessenger from "./Components/ChatApp/ChatMessenger";
 import Dashboards from "./Components/Dasboard/Dashboards";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Chart from "./Components/Chartss/Chart";
-
+import About from "./Components/About/About";
 const App = () => {
   const token = localStorage.getItem("token");
   let role = null;
@@ -87,6 +87,7 @@ const App = () => {
             />
             {/* Additional Routes */}
             <Route path="/issue-form" element={<Forms />} />
+            <Route path="/about" element={<About />} />
             <Route path="/chat-app" element={<ChatMessenger />} />
             <Route path="/dashboard" element={<Dashboards />} />
             <Route path="/chart" element={<Chart />} />

@@ -7,6 +7,7 @@ import {
   faTachometerAlt,
   faEdit,
   faComments,
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = () => {
