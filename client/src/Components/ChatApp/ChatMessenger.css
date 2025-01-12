@@ -37,7 +37,7 @@ section.chat__section {
 }
 
 .message__area {
-    height: 420px;
+    height: 350px;
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -79,4 +79,10 @@ textarea {
     left: 0;
     color: #333;
     font-size: 14px;
+}
+.chat-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 10px;
 }
