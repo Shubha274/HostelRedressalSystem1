@@ -7,6 +7,7 @@ import "../IssueForm/Forms";
 import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 import Navbar from "../NavBar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
+import WardenRole from "../WardebCard/WardenRoleCard";
 import { jwtDecode } from "jwt-decode";
 
 const StudentDboard = () => {
@@ -14,9 +15,9 @@ const StudentDboard = () => {
   return (
     <>
       <Navbar />
-      <h1>our student dashboard page</h1>
-      <p>i am shubha</p>
-      <StudentRole />
+      {/* <h1>our student dashboard page</h1>
+      <p>i am shubha</p> */}
+      <WardenRole />
       <Sidebar />
       <Table />
       <ChatbotAdm />

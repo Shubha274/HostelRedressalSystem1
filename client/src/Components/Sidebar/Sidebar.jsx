@@ -37,15 +37,19 @@ const Sidebar = () => {
             <FontAwesomeIcon icon={faTachometerAlt} className="icon" />
             <span>Dashboard</span>
           </li>
-          {/* {(role === "student" || role === "warden") && ( */}
-          <li onClick={() => handleNavigation("/issue-form")}>
-            <FontAwesomeIcon icon={faEdit} className="icon" />
-            <span>Issue Form</span>
-          </li>
-          {/* )} */}
+          {(role === "student" || role === "warden") && (
+            <li onClick={() => handleNavigation("/issue-form")}>
+              <FontAwesomeIcon icon={faEdit} className="icon" />
+              <span>Issue Form</span>
+            </li>
+          )}
           <li onClick={() => handleNavigation("/chat-app")}>
             <FontAwesomeIcon icon={faComments} className="icon" />
             <span>Chat App</span>
+          </li>
+          <li onClick={() => handleNavigation("/about")}>
+            <FontAwesomeIcon icon={faInfoCircle} className="icon" />
+            <span>About</span>
           </li>
         </ul>
       </div>

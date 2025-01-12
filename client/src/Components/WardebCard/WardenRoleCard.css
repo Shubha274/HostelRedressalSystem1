@@ -87,3 +87,16 @@
 .delete-button:hover {
   background-color: #c0392b;
 }
+.loading-message {
+  font-size: 1em;
+  color: #666;
+  text-align: center;
+  margin: 20px;
+}
+
+.error-message {
+  font-size: 1em;
+  color: red;
+  text-align: center;
+  margin: 20px;
+}
