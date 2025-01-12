@@ -10,7 +10,7 @@ const Forms = ({ role }) => {
     roomNo: "",
     issueDescription: "",
   });
-
+  localStorage.setItem("token", token);
   const [successMessage, setSuccessMessage] = useState(""); // State for success message
 
   const handleChange = (e) => {
@@ -26,7 +26,7 @@ const Forms = ({ role }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/issues",
+        "http://localhost:8080/api/issues/create",
         formData
       );
       console.log("Issue submitted:", response.data);
