@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import jwt from "jsonwebtoken";
 
 const Tabless = () => {
   const [data, setData] = useState([]); // State for storing issue data
@@ -12,9 +12,9 @@ const Tabless = () => {
 
     if (token) {
       try {
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.userId;
-        const role = decodedToken.role;
+        const decodedToken = jwt.decode(token);
+        const { role, userId } = decodedToken;
+
         axios
           .get(`http://localhost:8080/api/issues/${role}/${userId}`)
           .then((response) => {
