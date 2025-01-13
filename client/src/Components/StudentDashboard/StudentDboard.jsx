@@ -3,6 +3,7 @@ import axios from "axios";
 import "./StudentDboard.css";
 import StudentRole from "../StudentCard/StudentRoleCard";
 import Table from "../Tables/Table";
+import Tabless from "../Tables/Tabless";
 import "../IssueForm/Forms";
 import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
 import Navbar from "../NavBar/Navbar";
@@ -19,7 +20,7 @@ const StudentDboard = () => {
       <p>i am shubha</p> */}
       <WardenRole />
       <Sidebar />
-      <Table />
+      {/* <Table /> */} <Tabless />
       <ChatbotAdm />
     </>
   );

@@ -3,7 +3,7 @@ import Table from "../Tables/Table";
 import Navbar from "../NavBar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import ChatbotHeadWar from "../ChatbotHeadWar/ChatbotHeadWar";
-
+import Tabless from "../Tables/Tabless";
 import Chart from "../Chartss/Chart";
 import { jwtDecode } from "jwt-decode";
 const token = localStorage.getItem("token");
@@ -24,7 +24,7 @@ const AdminDboard = () => {
       <Navbar />
       <h1>hello i am the admin</h1>
       <ChatbotHeadWar />
-
+      <Tabless />
       <Chart />
       <Table />
       <Sidebar />

@@ -9,6 +9,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { jwtDecode } from "jwt-decode";
 import RoleBasedTable from "../Tables/RoleBasedTable";
 import ChatbotAdm from "../ChatbotStd/ChatbotAdm";
+import Tabless from "../Tables/Tabless";
 const token = localStorage.getItem("token");
 let role = null;
 
@@ -30,7 +31,8 @@ const WardenDboard = () => {
       <ChatbotWar />
       <WardenRole />
       <Chart />
-      <Table />
+      {/* <Table /> */}
+      <Tabless />
 
       {/* {token && <Sidebar role={role} />} */}
     </div>

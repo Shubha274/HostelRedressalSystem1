@@ -19,7 +19,7 @@ exports.createIssue = async (req, res) => {
 
     // Prepare the SQL query
     const query = `
-      INSERT INTO issues (uname,room,description,userid,issueGenerated,solved,issueStatus)
+      INSERT INTO issues (iname,room,description,userid,issueGenerated,solved,issueStatus)
       VALUES (?, ?, ?, ?,NOW(),0,'pending')
     `;
 
@@ -46,14 +46,14 @@ exports.getLatestIssue = async (req, res) => {
     const connection = await connectDB();
     const query = `
     SELECT 
-      description, 
-      issueGenerated, 
-      issueSolved, 
-      issueStatus 
-    FROM issues WHERE username = ? 
-    ORDER BY issueGenerated DESC 
-    LIMIT 1;
-  `;
+    iname, 
+    DATE_FORMAT(issueGenerated, '%Y-%m-%dT%H:%i:%sZ') AS issueGenerated,
+    DATE_FORMAT(issueSolved, '%Y-%m-%dT%H:%i:%sZ') AS issueSolved,
+    issueStatus
+FROM issues
+WHERE userid = ?
+ORDER BY issueGenerated DESC
+LIMIT 1`;
 
     const [rows] = await connection.query(query, [username]);
 
