@@ -31,8 +31,8 @@ const WardenDboard = () => {
       <ChatbotWar />
       <WardenRole />
       <Chart />
-      {/* <Table /> */}
-      <Tabless />
+      <Table />
+      {/* <Tabless /> */}
 
       {/* {token && <Sidebar role={role} />} */}
     </div>
