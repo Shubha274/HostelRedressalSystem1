@@ -4,9 +4,7 @@
   <p>
     Built using <strong>React.js</strong>, <strong>Node.js</strong>, <strong>Express.js</strong>, <strong>MySQL</strong>, <strong>WebSocket</strong>, <strong>Web Speech API</strong>, and <strong>Chart.js</strong>
   </p>
-  <a href="https://github.com/Shubha274/HostelRedressalSystem1">
-    <img src="https://img.shields.io/badge/View%20on-GitHub-181717?style=for-the-badge&logo=github" alt="GitHub" />
-  </a>
+  
 </div>
 
 ---
