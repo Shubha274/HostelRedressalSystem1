@@ -68,7 +68,7 @@ npm run dev
 cd ../client
 npm install
 npm run dev
-Visit http://localhost:4000 in your browser.
+Visit http://localhost:5173 in your browser.
 
 
 
