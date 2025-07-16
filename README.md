@@ -35,38 +35,8 @@
 | Real-Time     | WebSocket (Socket.IO)                   |
 | Database      | MySQL                                   |
 
----
-## 📸 Screenshots
-### 🏠 Login Page  
-![Home](./Screenshots/Login_Form.png)
-### 🏠 Home Page  
-![Home](./Screenshots/homepage1.png)
-![Home](./Screenshots/homepage2.png)
-
-### 🛍️ Service Selection  
-![Service Selection](./Screenshots/services.png)
-
-### 🛍️ Cart 
-![Service Selection](./Screenshots/cart.png)
 
 
-### 📋 Add Adresses
-![Customer Orders](./Screenshots/Add_Address.png)
-
-### 📋 About Us
-![Customer Orders](./Screenshots/about_us1.png)
-![Customer Orders](./Screenshots/about_us2.png)
-
-
-### 🛠️ Admin Dashboard  
-![Admin Dashboard](./Screenshots/Add_services.png)
-
-### 🛠️ Service List
-![Admin Dashboard](./Screenshots/ServiceList.png)
-
-
-### 📋 Customer Order History  
-![Customer Order](./Screenshots/Orders.png)
 ---
 ## 💡 How to Run Locally
 
